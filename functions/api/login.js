@@ -17,32 +17,24 @@ export const onRequestPost = async ({ request, env }) => {
     return json({ ok: false, error: 'Invalid credentials' }, 401);
   }
 
-  // Create session in D1 with TTL (7 days)
-  const sid = crypto.randomUUID();
+  // Stateless signed token with TTL (7 days)
   const ttlSeconds = 7 * 24 * 60 * 60;
   const now = Date.now();
-  const expiresAt = now + ttlSeconds * 1000;
-  try {
-    if (!env.DB || !env.DB.prepare) throw new Error('D1 DB not bound');
-    // Ensure table exists (use prepare().run() for local D1 compatibility)
-    await env.DB
-      .prepare(
-        'CREATE TABLE IF NOT EXISTS sessions (sid TEXT PRIMARY KEY, user TEXT NOT NULL, createdAt INTEGER NOT NULL, expiresAt INTEGER NOT NULL)'
-      )
-      .run();
-    await env.DB.prepare(
-      'INSERT INTO sessions (sid, user, createdAt, expiresAt) VALUES (?, ?, ?, ?)'
-    ).bind(sid, u, now, expiresAt).run();
-  } catch (e) {
-    // Log and surface the error message to aid debugging in dev
-    console.error('Login session store error:', e && (e.stack || e.message || e));
-    return json({ ok: false, error: 'Session store error', detail: String(e && (e.message || e)) }, 500);
-  }
+  const payload = {
+    u,
+    iat: now,
+    exp: now + ttlSeconds * 1000,
+    jti: crypto.randomUUID(),
+  };
+  const secret = env.SESSION_SECRET || ADMIN_PASS || 'change-me-secret';
+  const payloadB64 = base64url(JSON.stringify(payload));
+  const sig = await hmacSign(payloadB64, secret);
+  const token = `${payloadB64}.${sig}`;
 
   // Cookie: same-origin -> SameSite=Lax; Secure required on HTTPS (Pages is HTTPS)
-  const cookie = `sid=${sid}; HttpOnly; Path=/; Max-Age=${ttlSeconds}; SameSite=Lax; Secure`;
+  const cookie = `sid=${token}; HttpOnly; Path=/; Max-Age=${ttlSeconds}; SameSite=Lax; Secure`;
 
-  return json({ ok: true, token: sid }, 200, { 'Set-Cookie': cookie });
+  return json({ ok: true, token }, 200, { 'Set-Cookie': cookie });
 };
 
 function json(body, status = 200, headers = {}) {
@@ -53,4 +45,34 @@ function json(body, status = 200, headers = {}) {
       ...headers,
     },
   });
+}
+
+function base64url(input) {
+  const str = typeof input === 'string' ? input : JSON.stringify(input);
+  const b64 = btoa(unescape(encodeURIComponent(str)));
+  return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+}
+
+function fromBase64url(b64url) {
+  const b64 = b64url.replace(/-/g, '+').replace(/_/g, '/');
+  const pad = '='.repeat((4 - (b64.length % 4)) % 4);
+  const s = atob(b64 + pad);
+  return decodeURIComponent(escape(s));
+}
+
+async function hmacSign(message, secret) {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    'raw',
+    enc.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
+  const sigBuf = await crypto.subtle.sign('HMAC', key, enc.encode(message));
+  const bytes = new Uint8Array(sigBuf);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  const b64 = btoa(bin);
+  return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
 }
