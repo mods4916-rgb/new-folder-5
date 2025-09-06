@@ -1,0 +1,56 @@
+# Static Website .gitignore
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary Files
+*.tmp
+*.temp
+*.log
+
+# Node.js (if running in dual mode)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment Files (if any)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build Artifacts (if any)
+dist/
+build/
+*.min.js
+*.min.css
+
+# Server-specific files (if converted to pure static)
+# Uncomment these if you want pure static version only:
+# server.js
+# site-config.js
+# package.json
+# package-lock.json
+
+# Cloudflare/Deployment files (if not using)
+# .wrangler/ is useful locally; keep it ignored. But allow wrangler.toml to be committed so Pages can read it.
+.wrangler/
+
+# Backup files
+*.bak
+*.backup

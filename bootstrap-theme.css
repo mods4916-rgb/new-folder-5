@@ -1,0 +1,85 @@
+/* Custom theme for Lucky Satta page */
+
+/* Basic resets */
+html, body { height: 100%; }
+body { background:#ffffff; color:#000; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif; }
+img { max-width: 100%; height: auto; }
+
+/* Utilities */
+.nopadding { padding-left: 0 !important; padding-right: 0 !important; }
+.text-center { text-align: center; }
+
+/* Top navigation strip */
+.topboxnew { background:#ffed99; border-bottom:1px solid #f1c40f; }
+.topboxnew .newnav { padding:8px 0; }
+.topboxnew .newnav ul { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; justify-content:center; }
+.topboxnew .newnav ul li { margin:4px 8px; }
+.topboxnew .newnav ul li a { display:inline-block; padding:6px 12px; color:#000; font-weight:700; text-decoration:none; border-radius:4px; transition:all .2s; }
+.topboxnew .newnav ul li a:hover, .topboxnew .newnav ul li a.active { background:#ff6633; color:#fff; }
+.text_slide { background:#fff7c7; border-top:1px solid #fde68a; border-bottom:1px solid #fde68a; padding:6px 0; }
+
+/* Logo section */
+.sattalogo { padding:18px 0 8px; background:#fff; }
+.sattalogo h1 { margin:4px 0; font-size:42px; font-weight:900; letter-spacing:2px; }
+.sattalogo h1 a { color:#ff6633; text-decoration:none; }
+
+/* Circle/live result area */
+.circlebox { padding:20px 0; background: radial-gradient(ellipse at center, #ffffff 0%, #fff6cc 100%); }
+.liveresult { display:inline-block; padding:8px 16px; border-radius:10px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+.datetime { font-weight:700; color:#333; }
+#clockbox { font-size:16px; }
+.sattaname p { margin:8px 0 2px; font-size:18px; color:#333; font-weight:700; letter-spacing:1px; }
+.sattaresult span { display:inline-block; min-width:80px; padding:6px 14px; font-size:36px; font-weight:800; color:#fff; background:#ff6633; border-radius:10px; box-shadow: inset 0 -3px 0 rgba(0,0,0,.15); }
+
+/* Callout/notice cards */
+.callbox { padding:10px 8px; }
+.callbox .card { max-width:920px; margin:10px auto; }
+.callbox .card-body { background: linear-gradient(to bottom, #ffd800, #ffffff); border:1px dashed red; border-radius:20px; }
+.blink { color:#d60000; }
+
+/* Tables */
+.tablebox1 { padding:10px 0; }
+.tablebox1 .table { background:#fff; margin-bottom:10px; border:1px solid #000; border-collapse:collapse; }
+.tablebox1 .table > thead.foryellow th { background: linear-gradient(#ffe373, #ffd44d); color:#000; border-top:2px dotted #ff6633; border-bottom:2px dotted #ff6633; border-left:1px solid #000; border-right:1px solid #000; font-weight:800; text-align:center; padding:50px; }
+.tablebox1 .table > tbody > tr > td, .tablebox1 .table > thead > tr > th { vertical-align:middle; text-align:center; border-left:1px solid #000; border-right:1px solid #000; }
+.tablebox1 .table > tbody > tr { border-top:1px solid #cfcfcf; }
+.tablebox1 .table > tbody > tr:first-child { border-top:1px solid #000; }
+.tablebox1 .table > tbody > tr > td { padding:8px 235px; }
+.tablebox1 .table > tbody > tr > td:nth-child(2) { font-weight:700; font-size:40px; color:#333; }
+.tablebox1 .table > tbody > tr > td:nth-child(3) img { width:80px; height:80px; object-fit:contain; display:inline-block; }
+/* Ensure actual wait.gif shows (no CSS fallback badge) */
+.waitimg { display:inline-block; }
+.waitimg:after { content:none !important; }
+/* Force bigger wait.gif regardless of HTML width/height */
+.waitimg img { width:80px !important; height:80px !important; }
+
+/* Disawar arrow image sizing/alignment */
+.sattadividerr img[src*="arrow.gif"] { width:50px; height:50px; vertical-align:middle; }
+/* Column widths close to screenshot layout */
+.tablebox1 .table > thead > tr > th:nth-child(1),
+.tablebox1 .table > tbody > tr > td:nth-child(1) { width:37%; }
+.tablebox1 .table > thead > tr > th:nth-child(2),
+.tablebox1 .table > tbody > tr > td:nth-child(2) { width:30%; }
+.tablebox1 .table > thead > tr > th:nth-child(3),
+.tablebox1 .table > tbody > tr > td:nth-child(3) { width:33%; }
+
+/* Gradients and links used within tables */
+.forYellowGradient { background: linear-gradient(180deg, #ff8a2b 0%, #ff6a00 100%); color:#fff; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; font-size:16px; line-height:1.25; }
+.forYellowGradient .gamenameeach { color:#ffffff; text-decoration:none; font-weight:900; display:block; font-size:18px; line-height:1.1; margin-bottom:4px; }
+.forYellowGradient .gamenameeach:hover { text-decoration:underline; }
+.gamenameeach { color:#ff6633; text-decoration:none; font-weight:800; }
+.gamenameeach:hover { text-decoration:underline; }
+.waitimg img { display:inline-block; }
+
+/* Footer strip */
+.somelinks2 { padding:16px 0; background:#fff7c7; border-top:1px solid #fde68a; }
+
+/* Helper: marquee fallback styling */
+.text_slide marquee { font-weight:700; }
+
+/* Responsive tweaks */
+@media (max-width: 767px) {
+  .sattalogo h1 { font-size:34px; }
+  .sattaresult span { min-width:64px; font-size:30px; }
+  .topboxnew .newnav ul { justify-content:flex-start; padding:0 10px; }
+}

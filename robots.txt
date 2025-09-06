@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Allow all robots to access all content
+# This is a static website with public content
+
+Sitemap: /sitemap.xml

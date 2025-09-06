@@ -1,0 +1,21 @@
+{
+  "name": "Satta Chart Static Website",
+  "short_name": "SattaChart",
+  "description": "Static website for viewing Satta charts and data",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007bff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "uploads/arrow.gif",
+      "sizes": "any",
+      "type": "image/gif"
+    }
+  ],
+  "categories": ["entertainment", "utilities"],
+  "lang": "en",
+  "scope": "/",
+  "prefer_related_applications": false
+}

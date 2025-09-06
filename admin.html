@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Editor</title>
+  <style>
+    html, body { height: 100%; margin: 0; background: #fff; font-family: Arial, sans-serif; }
+    /* Hide admin chrome to make preview identical to frontend */
+    .navbar, .header, .title-header, .status { display: none !important; }
+
+    /* Single floating Save button */
+    .save-fab {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      padding: 10px 16px;
+      font-weight: bold;
+      border-radius: 10px;
+      border: 2px solid black;
+      background: orange;
+      color: black;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .save-fab:disabled { opacity: 0.6; cursor: default; }
+    .save-status { position: fixed; top: 10px; right: 110px; z-index: 1000; color: #2e7d32; font-weight: 600; }
+
+    /* (removed) quick nav buttons */
+
+    /* Full-bleed preview */
+    .panel { width: 100vw; height: 100vh; margin: 0; padding: 0; }
+    .panel .box { width: 100%; height: 100%; border: 0; border-radius: 0; overflow: hidden; }
+    .panel iframe { width: 100%; height: 100%; border: 0; background: #fff; display: block; }
+  </style>
+</head>
+<body>
+  <button id="saveBtn" class="save-fab">Save</button>
+  <div id="status" class="save-status"></div>
+
+  
+
+  <div class="panel" style="grid-template-columns: 1fr;">
+    <div class="box">
+      <iframe id="preview"></iframe>
+    </div>
+  </div>
+
+  <script>
+    const preview = document.getElementById('preview');
+    const statusEl = document.getElementById('status');
+    const saveBtn = document.getElementById('saveBtn');
+    // Configurable API base for static hosting (e.g., GitHub Pages)
+    const API_BASE = (window.API_BASE || '').replace(/\/$/, '');
+  const params = new URLSearchParams(location.search);
+  const sidToken = params.get('sid');
+  // remove sid from visible URL for cleanliness but keep token in memory
+  if (sidToken) { params.delete('sid'); history.replaceState({}, '', `${location.pathname}${params.toString() ? ('?' + params.toString()) : ''}`); }
+  let currentPath = (params.get('path') || 'index.html').replace(/^\/+/, '');
+
+    function setStatus(msg, ok=true){
+      statusEl.textContent = msg || '';
+      statusEl.style.color = ok ? '#2e7d32' : '#b00020';
+    }
+
+    // Show a prominent banner with actions when static save is unsupported
+    function showUnsupportedSaveHelp(filePath, htmlContent){
+      // Remove any existing banner
+      const old = document.getElementById('unsupportedBanner');
+      if (old) old.remove();
+      const wrap = document.createElement('div');
+      wrap.id = 'unsupportedBanner';
+      wrap.setAttribute('data-admin-only','');
+      wrap.style.cssText = 'position:fixed;top:58px;right:10px;z-index:1001;max-width:520px;background:#fff3cd;color:#664d03;border:2px solid #664d03;padding:10px 12px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.15);font-family:Arial,sans-serif;';
+      const msg = document.createElement('div');
+      msg.textContent = 'Saving static HTML is not supported on Cloudflare Pages at runtime.';
+      msg.style.marginBottom = '8px';
+      wrap.appendChild(msg);
+      const actions = document.createElement('div');
+      actions.style.display = 'flex';
+      actions.style.gap = '8px';
+      // Download HTML button
+      const dl = document.createElement('button');
+      dl.textContent = `Download ${filePath}`;
+      dl.style.cssText = 'padding:8px 10px;font-weight:bold;border:2px solid #000;border-radius:6px;background:orange;color:#000;cursor:pointer;';
+      dl.addEventListener('click', () => downloadStringAsFile(filePath, htmlContent || ''));
+      actions.appendChild(dl);
+      // Open Year Editor button (if applicable)
+      const ybtn = document.createElement('button');
+      ybtn.textContent = 'Open Year Editor';
+      ybtn.style.cssText = 'padding:8px 10px;font-weight:bold;border:2px solid #000;border-radius:6px;background:yellow;color:#000;cursor:pointer;';
+      const link = computeYearEditorLinkFromCurrent();
+      if (link) {
+        ybtn.addEventListener('click', () => window.open(link, '_blank'));
+      } else {
+        ybtn.disabled = true;
+        ybtn.title = 'Open a year page to enable';
+      }
+      actions.appendChild(ybtn);
+      wrap.appendChild(actions);
+      document.body.appendChild(wrap);
+    }
+
+    function downloadStringAsFile(filename, content){
+      try {
+        const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename || 'page.html';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 500);
+      } catch {}
+    }
+
+    function computeYearEditorLinkFromCurrent(){
+      try {
+        const p = currentPath || '';
+        const u = new URL(p, location.origin);
+        const pathname = (u.pathname || '').replace(/^\/+/, '');
+        if (/^year\.html$/i.test(pathname)) {
+          const g = (u.searchParams.get('game') || '').trim();
+          const y = (u.searchParams.get('year') || '').trim();
+          if (g && y) return `year.html?game=${encodeURIComponent(g)}&year=${encodeURIComponent(y)}&admin=1`;
+        }
+        const m = pathname.match(/^year-([a-z0-9-]+)\.html$/i);
+        if (m && m[1]) {
+          const slug = m[1];
+          const y = (u.searchParams.get('year') || '').trim() || String(new Date().getFullYear());
+          return `year.html?game=${encodeURIComponent(slug)}&year=${encodeURIComponent(y)}&admin=1`;
+        }
+      } catch {}
+      return '';
+    }
+
+    function updateUrl(p){
+      const usp = new URLSearchParams(location.search);
+      usp.set('path', p);
+      history.replaceState({}, '', `${location.pathname}?${usp.toString()}`);
+    }
+
+    async function loadPage(p){
+      setStatus('Loading...');
+      // Load the page exactly as the frontend renders it
+      preview.onload = () => {
+        enableDirectEdit();
+        setStatus(`Loaded ${p}`);
+      };
+      // Pass admin=1 so the preview page and server know to allow editing
+  // Build preview URL and include sid token if available so middleware/auth can see it
+  const base = `/${p.replace(/^\/+/, '')}`;
+  const joiner = p.includes('?') ? '&' : '?';
+  const q = 'admin=1' + (sidToken ? ('&sid=' + encodeURIComponent(sidToken)) : '');
+  const pathWithFlag = base + joiner + q;
+      preview.src = pathWithFlag;
+      currentPath = p;
+      updateUrl(p);
+    }
+
+    async function savePage(){
+      try {
+        const p = currentPath || '';
+        // Determine target HTML file to save:
+        // - If viewing year.html with ?game=slug, save as year-<slug>.html
+        // - Else if already on year-<slug>.html, keep it
+        // - Always strip query/hash before saving
+        let filePath = p.replace(/[?#].*$/, '');
+        try {
+          const u = new URL(p, location.origin);
+          const base = (u.pathname || '').replace(/^\/+/, '');
+          const search = u.searchParams;
+          if (/^year\.html$/i.test(base)) {
+            const g = (search.get('game') || '').trim().toLowerCase();
+            if (g) filePath = `year-${g}.html`;
+          }
+        } catch {}
+        if (!filePath.endsWith('.html')) { setStatus('Only .html files are allowed', false); return; }
+        setStatus(`Saving ${filePath}...`);
+        saveBtn.disabled = true;
+        // Serialize full HTML from iframe, stripping admin-only overlays
+        const doc = preview.contentWindow.document;
+        const clone = doc.documentElement.cloneNode(true);
+        clone.querySelectorAll('[data-admin-only]')?.forEach(el => el.remove());
+        const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+        const headers = { 'Content-Type': 'application/json' };
+        if (sidToken) headers['Authorization'] = 'Bearer ' + sidToken;
+        const res = await fetch(`${API_BASE}/api/save-page`, {
+          method: 'POST',
+          credentials: 'include',
+          headers,
+          body: JSON.stringify({ path: filePath, html })
+        });
+        if (res.status === 401) { window.location.href = 'login.html'; return; }
+        if (res.status === 501) {
+          // Pages cannot write static files at runtime. Explain this clearly.
+          try {
+            const j = await res.json();
+            const msg = j && j.error ? j.error : 'Saving static HTML is not supported on Cloudflare Pages. Use chart editing or redeploy.';
+            setStatus(msg, false);
+            // Also show a banner with actions to help the admin proceed
+            showUnsupportedSaveHelp(filePath, html);
+          } catch {
+            setStatus('Saving static HTML is not supported on Cloudflare Pages. Use chart editing or redeploy.', false);
+            showUnsupportedSaveHelp(filePath, html);
+          }
+          return;
+        }
+        if (!res.ok) {
+          // Try to extract JSON error or plain text
+          let msg = 'Save failed';
+          try { const j = await res.json(); if (j && j.error) msg = j.error; } catch {
+            try { msg = (await res.text()) || msg; } catch {}
+          }
+          throw new Error(msg);
+        }
+        // For 200 OK, server should send JSON; tolerate empty body
+        let ok = true;
+        try {
+          const ct = res.headers.get('Content-Type') || '';
+          if (ct.includes('application/json')) {
+            const j = await res.json();
+            ok = !!(j && j.ok !== false);
+          }
+        } catch {}
+        if (!ok) throw new Error('Failed to save');
+        setStatus('Saved successfully');
+      } catch(e) {
+        setStatus(e.message || 'Save failed', false);
+      }
+      finally {
+        saveBtn.disabled = false;
+      }
+    }
+
+    function enableDirectEdit() {
+      const doc = preview.contentWindow.document;
+      if (!doc) return;
+      const root = doc.body;
+      if (!root) return;
+
+      // 1) Make only text-only leaf elements editable
+      const walker = doc.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, null);
+      while (walker.nextNode()) {
+        const el = walker.currentNode;
+        // Skip inputs, buttons, textareas, scripts, styles, iframes
+        if (/^(INPUT|BUTTON|TEXTAREA|SCRIPT|STYLE|IFRAME)$/.test(el.tagName)) {
+          el.setAttribute('contenteditable', 'false');
+          continue;
+        }
+        const hasElementChildren = Array.from(el.childNodes).some(n => n.nodeType === 1);
+        const hasText = el.textContent && el.textContent.trim().length > 0;
+        if (!hasElementChildren && hasText) {
+          el.setAttribute('contenteditable', 'true');
+          el.style.outline = '';
+        } else {
+          el.setAttribute('contenteditable', 'false');
+        }
+      }
+
+        // Explicitly enable editing for the 3rd column (आज का रिज़ल्ट) cells, even if empty
+        try {
+          const cells = root.querySelectorAll('.tablebox1 tbody tr td:nth-child(3)');
+          const unblockAncestors = (node) => {
+            let cur = node.parentElement;
+            while (cur && !cur.classList.contains('tablebox1')){
+              if (cur.hasAttribute('contenteditable') && cur.getAttribute('contenteditable') === 'false') {
+                cur.removeAttribute('contenteditable');
+              }
+              cur = cur.parentElement;
+            }
+          };
+          cells.forEach(td => {
+            unblockAncestors(td);
+            td.setAttribute('contenteditable', 'true');
+            td.setAttribute('tabindex', '0');
+            td.style.outline = '1px dashed #999';
+            td.style.userSelect = 'text';
+            td.style.pointerEvents = 'auto';
+            // Clear wait.gif or '-' when focusing so typing works immediately
+            td.addEventListener('focusin', () => {
+              if (td.querySelector('img')) td.textContent = '';
+              if ((td.textContent||'').trim() === '-') td.textContent = '';
+            });
+          });
+        } catch (e) {}
+
+        // Explicitly enable editing for visible time boxes (site uses several patterns)
+        try {
+          const timeEls = root.querySelectorAll('.time, .sattaresult .time, .sattaname, .sattaname p');
+          const unblockAncestorsTime = (node) => {
+            let cur = node && node.parentElement;
+            while (cur && !cur.isSameNode(root)){
+              if (cur.hasAttribute('contenteditable') && cur.getAttribute('contenteditable') === 'false') {
+                cur.removeAttribute('contenteditable');
+              }
+              cur = cur.parentElement;
+            }
+          };
+          timeEls.forEach(el => {
+            unblockAncestorsTime(el);
+            el.setAttribute('contenteditable', 'true');
+            el.setAttribute('tabindex', '0');
+            el.style.outline = '1px dashed #999';
+            el.style.userSelect = 'text';
+            el.style.pointerEvents = 'auto';
+            el.addEventListener('focusin', () => {
+              if ((el.textContent||'').trim() === '-') el.textContent = '';
+            });
+          });
+        } catch (e) {}
+
+        // Explicitly enable editing for DISAWER featured rectangle numbers
+        try {
+          const rect = root.querySelector('.featured-rect.disawer-hero .result');
+          if (rect) {
+            const unblockAncestors = (node) => {
+              let cur = node && node.parentElement;
+              while (cur && !cur.isSameNode(root)){
+                if (cur.hasAttribute('contenteditable') && cur.getAttribute('contenteditable') === 'false') {
+                  cur.removeAttribute('contenteditable');
+                }
+                cur = cur.parentElement;
+              }
+            };
+            unblockAncestors(rect);
+            rect.querySelectorAll('.num').forEach(num => {
+              unblockAncestors(num);
+              num.setAttribute('contenteditable','true');
+              num.setAttribute('tabindex','0');
+              num.style.outline = '1px dashed #999';
+              num.style.userSelect = 'text';
+              num.style.pointerEvents = 'auto';
+            });
+            // Do not install any focusing handlers here; let index.html decide focusing to avoid conflicts
+          }
+        } catch(e) {}
+
+      // 2) Keep structure safe: block format/structural edits
+      const allowedInputTypes = new Set([
+        'insertText',
+        'deleteContentBackward',
+        'deleteContentForward',
+        'insertFromPaste',
+        'insertTranspose'
+      ]);
+      doc.addEventListener('beforeinput', (e) => {
+        const target = e.target;
+        const isEditable = target && target.isContentEditable;
+        if (!isEditable || !allowedInputTypes.has(e.inputType)) {
+          e.preventDefault();
+        }
+      });
+
+      // 3) Paste as plain text only
+      doc.addEventListener('paste', (e) => {
+        const target = e.target;
+        if (!target || !target.isContentEditable) return;
+        e.preventDefault();
+        const text = (e.clipboardData || window.clipboardData).getData('text');
+        doc.execCommand('insertText', false, text);
+      });
+
+      // 4) Block Enter, manage Tab, and DnD
+      doc.addEventListener('keydown', (e) => {
+        const t = e.target;
+        const isEditable = t && t.isContentEditable;
+        if (!isEditable) return;
+        if (e.key === 'Enter') { e.preventDefault(); return; }
+        if (e.key === 'Tab') {
+          // In DISAWER featured rectangle, cycle focus between the two .num boxes
+          const rect = t.closest && t.closest('.featured-rect.disawer-hero .result');
+          if (rect) {
+            e.preventDefault();
+            const nums = Array.from(rect.querySelectorAll('.num'));
+            if (!nums.length) return;
+            const idx = Math.max(0, nums.indexOf(t));
+            const next = nums[(idx + (e.shiftKey ? nums.length - 1 : 1)) % nums.length];
+            if (next) next.focus();
+            return;
+          }
+          // Elsewhere, block Tab to avoid breaking structure
+          e.preventDefault();
+        }
+      });
+      doc.addEventListener('drop', (e) => e.preventDefault());
+      doc.addEventListener('dragover', (e) => e.preventDefault());
+
+      // 5) Handle nav links: switch preview via admin loadPage to keep admin=1
+      doc.addEventListener('click', (e) => {
+        const a = e.target && (e.target.closest ? e.target.closest('a') : null);
+        if (!a) return;
+        const rawHref = a.getAttribute('href') || '';
+        if (!rawHref) { e.preventDefault(); return; }
+        // Only intercept same-site relative html pages
+        const hasScheme = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(rawHref); // http, https, file, etc.
+        const isExternal = hasScheme;
+        if (isExternal) {
+          // open externals in new tab to avoid leaving admin context
+          e.preventDefault();
+          window.open(rawHref, '_blank');
+          return;
+        }
+        // normalize path and decide
+        const path = rawHref.replace(/^\/+/, '');
+        const isHtml = /\.html(?:$|[?#])/.test(path) || path === '';
+        if (isHtml) {
+          e.preventDefault();
+          loadPage(path || 'index.html');
+        }
+      });
+
+      // 6) If current page is chart.html, inject admin tools to add/remove year columns
+      try {
+        const isChart = /\/chart\.html$/i.test(doc.location.pathname || '') || /(^|[?#])path=chart\.html/i.test(parent.location.search || '');
+        if (isChart) installChartYearTools(doc);
+      } catch {}
+    }
+
+    function installChartYearTools(doc) {
+      const table = doc.querySelector('table');
+      if (!table) return;
+      // Normalize header/body: if first row with <th> is inside <tbody>, move it to <thead>
+      (function normalizeHeader(){
+        let thead = table.querySelector('thead');
+        let tbody = table.querySelector('tbody');
+        if (!tbody) {
+          // Wrap all existing rows into a tbody if missing
+          const newTbody = doc.createElement('tbody');
+          while (table.firstChild) {
+            const child = table.firstChild;
+            if (child.tagName && child.tagName.toUpperCase() === 'THEAD') break;
+            newTbody.appendChild(child);
+          }
+          table.appendChild(newTbody);
+          tbody = newTbody;
+        }
+        // If a valid header already exists, don't try to detect one from tbody
+        const hasExistingHeadRow = !!(thead && thead.querySelector('tr'));
+        let headerInBody = null;
+        if (!hasExistingHeadRow) {
+          // Find header-like row in tbody (row containing TH)
+          headerInBody = Array.from(tbody.querySelectorAll('tr')).find(tr => Array.from(tr.children).some(c => c.tagName === 'TH'));
+          // If no TH-based header found, try to detect a TD-based header row (texts like 'Games', '2025 Charts', '2024 Charts', etc.)
+          if (!headerInBody) {
+            const candidates = Array.from(tbody.querySelectorAll('tr'));
+            const looksLikeHeader = (tr) => {
+              const cells = Array.from(tr.children);
+              if (cells.length < 2) return false;
+              const texts = cells.map(c => c.textContent.trim());
+              const hasGames = /games/i.test(texts[0]);
+              const manyYears = texts.slice(1).filter(t => /(\d{4})(\s+Charts)?/i.test(t)).length >= Math.max(1, Math.floor(texts.length * 0.5));
+              return hasGames || manyYears;
+            };
+            const tdHeader = candidates.find(looksLikeHeader);
+            if (tdHeader) {
+              // Convert TDs to THs for header semantics
+              Array.from(tdHeader.children).forEach((c, i) => {
+                if (c.tagName !== 'TH') {
+                  const th = doc.createElement('th');
+                  th.innerHTML = c.innerHTML;
+                  // preserve inline styles/classes
+                  th.className = c.className;
+                  th.style.cssText = c.style.cssText;
+                  tdHeader.replaceChild(th, c);
+                }
+              });
+              headerInBody = tdHeader;
+            }
+          }
+        }
+        if (headerInBody) {
+          if (!thead) { thead = doc.createElement('thead'); table.insertBefore(thead, tbody); }
+          thead.appendChild(headerInBody);
+        }
+        // Ensure there is a header row
+        if (!thead) { thead = doc.createElement('thead'); table.insertBefore(thead, table.firstChild); }
+        if (!thead.querySelector('tr')) {
+          const tr = doc.createElement('tr');
+          const th = doc.createElement('th'); th.textContent = 'Games';
+          tr.appendChild(th);
+          thead.appendChild(tr);
+        }
+        // Deduplicate: keep the header row with the most cells, remove others
+        const headRows = Array.from(thead.querySelectorAll('tr'));
+        if (headRows.length > 1) {
+          const primary = headRows.slice().sort((a,b) => b.children.length - a.children.length)[0];
+          headRows.forEach(tr => { if (tr !== primary) tr.remove(); });
+        }
+      })();
+      const toolbar = doc.createElement('div');
+      toolbar.setAttribute('data-admin-only', '');
+      toolbar.style.cssText = 'position:fixed;top:10px;left:10px;z-index:9999;display:flex;gap:8px;background:rgba(255,255,255,0.9);border:2px solid #000;padding:6px 8px;border-radius:8px;font-family:Arial, sans-serif;';
+      const addBtn = doc.createElement('button');
+      addBtn.textContent = 'Add Year';
+      const rmBtn = doc.createElement('button');
+      rmBtn.textContent = 'Remove Year';
+      [addBtn, rmBtn].forEach(b => { b.style.cssText = 'padding:6px 10px;font-weight:bold;border:2px solid #000;border-radius:6px;background:orange;color:#000;cursor:pointer;'; b.setAttribute('type','button'); });
+      toolbar.appendChild(addBtn);
+      toolbar.appendChild(rmBtn);
+      doc.body.appendChild(toolbar);
+
+      const slugify = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+
+      function ensureHeaderRow() {
+        let thead = table.querySelector('thead');
+        if (!thead) { thead = doc.createElement('thead'); table.insertBefore(thead, table.firstChild); }
+        let tr = thead.querySelector('tr');
+        if (!tr) { tr = doc.createElement('tr'); thead.appendChild(tr); }
+        if (tr.children.length === 0) {
+          const th = doc.createElement('th'); th.textContent = 'Games'; tr.appendChild(th);
+        }
+        return tr;
+      }
+
+      function getHeadRow() { return table.querySelector('thead tr') || ensureHeaderRow(); }
+
+      function extractYearText(txt){
+        const m = String(txt || '').match(/(\d{4})/);
+        return m ? m[1] : null;
+      }
+
+      function formatYearHeader(y){
+        // Try to mirror existing header label format (e.g., '2025 Charts')
+        const headRow = getHeadRow();
+        const sample = Array.from(headRow.children).slice(1).map(th => th.textContent.trim()).find(Boolean) || '';
+        if (/\d{4}\s+Charts/i.test(sample)) return `${y} Charts`;
+        return String(y);
+      }
+
+      function getYears() {
+        const headRow = getHeadRow();
+        const ths = Array.from(headRow.children).slice(1); // skip first 'Games'
+        return ths.map(th => extractYearText(th.textContent.trim())).filter(Boolean);
+      }
+
+      function columnIndexOfYear(y) {
+        const headRow = getHeadRow();
+        const ths = Array.from(headRow.children);
+        return ths.findIndex(th => extractYearText(th.textContent.trim()) === String(y));
+      }
+
+      function moveColumn(currentIdx, targetIdx) {
+        if (currentIdx === targetIdx || currentIdx < 0 || targetIdx < 0) return;
+        const headRow = getHeadRow();
+        const hCells = headRow.children;
+        headRow.insertBefore(hCells[currentIdx], hCells[targetIdx] || null);
+        table.querySelectorAll('tbody tr').forEach(tr => {
+          const cells = tr.children;
+          tr.insertBefore(cells[currentIdx], cells[targetIdx] || null);
+        });
+      }
+
+      function ensureYearCellsExist(y) {
+        const headRow = getHeadRow();
+        if (columnIndexOfYear(y) === -1) {
+          const th = doc.createElement('th'); th.textContent = formatYearHeader(y);
+          // Insert immediately after 'Games' (index 0)
+          const ref = headRow.children[1] || null;
+          headRow.insertBefore(th, ref);
+          table.querySelectorAll('tbody tr').forEach(tr => {
+            const firstCell = tr.querySelector('td');
+            if (!firstCell) return;
+            const game = firstCell.textContent.trim();
+            const slug = slugify(game);
+            const td = doc.createElement('td');
+            const a = doc.createElement('a');
+            a.href = `year-${slug}.html?year=${encodeURIComponent(y)}`;
+            a.textContent = y;
+            td.appendChild(a);
+            // Insert new year cell at column index 1 (after game name)
+            const insertBefore = tr.children[1] || null;
+            tr.insertBefore(td, insertBefore);
+          });
+        }
+      }
+
+      function reorderYearsDesc() {
+        const years = getYears().map(Number).sort((a,b) => b - a).map(String);
+        // place each year at target position (index+1 because 0 is Games)
+        years.forEach((y, i) => {
+          const targetIdx = i + 1;
+          let curIdx = columnIndexOfYear(y);
+          if (curIdx !== targetIdx) {
+            // Recompute each time because DOM indices change after moves
+            curIdx = columnIndexOfYear(y);
+            moveColumn(curIdx, targetIdx);
+          }
+        });
+      }
+
+      function addYearColumn(yearStr) {
+        const y = String(yearStr).trim();
+        if (!/^\d{4}$/.test(y)) { alert('Enter a valid 4-digit year'); return; }
+        ensureYearCellsExist(y);
+        reorderYearsDesc();
+      }
+
+      function removeYearColumn(yearStr) {
+        const y = String(yearStr).trim();
+        if (!/^\d{4}$/.test(y)) { alert('Enter a valid 4-digit year'); return; }
+        const headRow = getHeadRow();
+        if (!headRow) return;
+        const ths = Array.from(headRow.children);
+        const idx = ths.findIndex(th => th.textContent.trim() === y);
+        if (idx <= 0) { alert('Year not found (or trying to remove first column)'); return; }
+        // Remove header cell
+        headRow.removeChild(ths[idx]);
+        // Remove same index td from each row
+        table.querySelectorAll('tbody tr').forEach(tr => {
+          const tds = tr.children;
+          if (tds && tds[idx]) tr.removeChild(tds[idx]);
+        });
+        reorderYearsDesc();
+      }
+
+      addBtn.addEventListener('click', () => {
+        const y = prompt('Enter new year (YYYY):');
+        if (y) addYearColumn(y);
+      });
+      rmBtn.addEventListener('click', () => {
+        const y = prompt('Remove which year (YYYY):');
+        if (y) removeYearColumn(y);
+      });
+    }
+
+    saveBtn.addEventListener('click', savePage);
+
+    // Auth gate then initial load
+    (async function(){
+      try {
+        const headers = sidToken ? { 'Authorization': 'Bearer ' + sidToken } : {};
+        const res = await fetch(`${API_BASE}/api/auth-check`, { credentials: 'include', headers });
+        if (!res.ok) throw new Error('UNAUTHORIZED');
+        // proceed when authenticated
+        loadPage(currentPath);
+      } catch {
+        window.location.href = 'login.html';
+      }
+    })();
+  </script>
+</body>
+</html>

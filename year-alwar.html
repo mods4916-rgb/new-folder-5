@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alwar 2025 Chart</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #fff; }
+    .navbar { display: flex; justify-content: center; gap: 150px; margin: 20px 0; }
+    .navbar a { text-decoration: none; padding: 12px 40px; border-radius: 12px; font-weight: bold; color: black; border: 2px solid black; background: yellow; }
+    .navbar a.chart { background: orange; border: none; }
+
+    .header { text-align: center; background: linear-gradient(to right, orange, yellow); padding: 30px 10px; }
+    .header h2 { margin: 0; color: #444; font-size: 22px; letter-spacing: 2px; }
+
+    .title-header { text-align: center; background: #fff; padding: 16px 10px; border-bottom: 3px solid orange; margin-top: 8px; }
+    .title-header h1 { margin: 0; font-size: 34px; color: #222; letter-spacing: 1px; }
+
+    table { width: 100%; border-collapse: collapse; text-align: center; margin: 20px auto; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+    th { background: yellow; font-weight: bold; position: sticky; top: 0; z-index: 1; }
+    td:first-child { background: #ff4d00; color: #fff; font-weight: bold; text-align: left; padding-left: 15px; position: sticky; left: 0; z-index: 1; }
+
+    .container { overflow: auto; }
+    .note { text-align: right; font-size: 14px; margin: 5px 20px; }
+  </style>
+</head>
+<body>
+  <div class="navbar" style="display: flex; justify-content: center; gap: 150px; margin: 20px 0px;" contenteditable="false"><a href="index.html" style="text-decoration: none; padding: 12px 40px; border-radius: 12px; font-weight: bold; color: black; border: 2px solid black; background: yellow;" contenteditable="true">HOME</a><a href="chart.html" class="chart" style="text-decoration: none; padding: 12px 40px; border-radius: 12px; font-weight: bold; color: black; border: none; background: orange;" contenteditable="true">CHART</a></div>
+
+  <div class="header" style="background: linear-gradient(to right, orange, yellow);" contenteditable="false">
+    <h2 contenteditable="true">LUCKY-SATTA</h2>
+  </div>
+
+  <div class="title-header" contenteditable="false">
+    <h1 id="gameTitle" contenteditable="true">Saharanpur City - 2025 CHART</h1>
+  </div>
+  <script contenteditable="false">
+    // Early header set to avoid any stale content before main script runs
+    (function(){
+      try {
+        const p = new URLSearchParams(location.search);
+        const y = String(p.get('year') || new Date().getFullYear());
+        const gq = (p.get('game')||'').trim();
+        let disp = 'GAME';
+        if (gq) {
+          disp = gq.split('-').filter(Boolean).map(w => w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
+        } else {
+          const m = (location.pathname||'').match(/\byear-([a-z0-9-]+)\.html$/);
+          if (m && m[1]) {
+            const slug = m[1];
+            disp = slug.split('-').filter(Boolean).map(w => w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
+          }
+        }
+        const h1 = document.getElementById('gameTitle');
+        if (h1) h1.textContent = `${disp} - ${y} CHART`;
+        try { document.title = `${disp} ${y} Chart`; } catch {}
+      } catch(e){}
+    })();
+  </script>
+
+
+  <div class="container" contenteditable="false">
+    <table id="yearTable" contenteditable="false"><thead contenteditable="false"><tr contenteditable="false"><th contenteditable="true">Alwar - 2025</th><th contenteditable="true">January</th><th contenteditable="true">February</th><th contenteditable="true">March</th><th contenteditable="true">April</th><th contenteditable="true">May</th><th contenteditable="true">June</th><th contenteditable="true">July</th><th contenteditable="true">August</th><th contenteditable="true">September</th><th contenteditable="true">October</th><th contenteditable="true">November</th><th contenteditable="true">December</th></tr></thead><tbody contenteditable="false"><tr contenteditable="false"><td contenteditable="true">01</td><td data-key="01-01" contenteditable="true">-</td><td data-key="01-02" contenteditable="true">-</td><td data-key="01-03" contenteditable="true">-</td><td data-key="01-04" contenteditable="true">-</td><td data-key="01-05" contenteditable="true">-</td><td data-key="01-06" contenteditable="true">-</td><td data-key="01-07" contenteditable="true">-</td><td data-key="01-08" contenteditable="true">-</td><td data-key="01-09" contenteditable="true">-</td><td data-key="01-10" contenteditable="true">-</td><td data-key="01-11" contenteditable="true">-</td><td data-key="01-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">02</td><td data-key="02-01" contenteditable="true">-</td><td data-key="02-02" contenteditable="true">-</td><td data-key="02-03" contenteditable="true">-</td><td data-key="02-04" contenteditable="true">-</td><td data-key="02-05" contenteditable="true">-</td><td data-key="02-06" contenteditable="true">-</td><td data-key="02-07" contenteditable="true">-</td><td data-key="02-08" contenteditable="true">-</td><td data-key="02-09" contenteditable="true">-</td><td data-key="02-10" contenteditable="true">-</td><td data-key="02-11" contenteditable="true">-</td><td data-key="02-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">03</td><td data-key="03-01" contenteditable="true">-</td><td data-key="03-02" contenteditable="true">-</td><td data-key="03-03" contenteditable="true">-</td><td data-key="03-04" contenteditable="true">-</td><td data-key="03-05" contenteditable="true">-</td><td data-key="03-06" contenteditable="true">-</td><td data-key="03-07" contenteditable="true">-</td><td data-key="03-08" contenteditable="true">-</td><td data-key="03-09" contenteditable="true">-</td><td data-key="03-10" contenteditable="true">-</td><td data-key="03-11" contenteditable="true">-</td><td data-key="03-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">04</td><td data-key="04-01" contenteditable="true">-</td><td data-key="04-02" contenteditable="true">-</td><td data-key="04-03" contenteditable="true">-</td><td data-key="04-04" contenteditable="true">-</td><td data-key="04-05" contenteditable="true">-</td><td data-key="04-06" contenteditable="true">-</td><td data-key="04-07" contenteditable="true">-</td><td data-key="04-08" contenteditable="true">-</td><td data-key="04-09" contenteditable="true">-</td><td data-key="04-10" contenteditable="true">-</td><td data-key="04-11" contenteditable="true">-</td><td data-key="04-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">05</td><td data-key="05-01" contenteditable="true">-</td><td data-key="05-02" contenteditable="true">-</td><td data-key="05-03" contenteditable="true">-</td><td data-key="05-04" contenteditable="true">-</td><td data-key="05-05" contenteditable="true">-</td><td data-key="05-06" contenteditable="true">-</td><td data-key="05-07" contenteditable="true">-</td><td data-key="05-08" contenteditable="true">-</td><td data-key="05-09" contenteditable="true">-</td><td data-key="05-10" contenteditable="true">-</td><td data-key="05-11" contenteditable="true">-</td><td data-key="05-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">06</td><td data-key="06-01" contenteditable="true">-</td><td data-key="06-02" contenteditable="true">-</td><td data-key="06-03" contenteditable="true">-</td><td data-key="06-04" contenteditable="true">-</td><td data-key="06-05" contenteditable="true">-</td><td data-key="06-06" contenteditable="true">-</td><td data-key="06-07" contenteditable="true">-</td><td data-key="06-08" contenteditable="true">-</td><td data-key="06-09" contenteditable="true">-</td><td data-key="06-10" contenteditable="true">-</td><td data-key="06-11" contenteditable="true">-</td><td data-key="06-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">07</td><td data-key="07-01" contenteditable="true">-</td><td data-key="07-02" contenteditable="true">-</td><td data-key="07-03" contenteditable="true">-</td><td data-key="07-04" contenteditable="true">-</td><td data-key="07-05" contenteditable="true">-</td><td data-key="07-06" contenteditable="true">-</td><td data-key="07-07" contenteditable="true">-</td><td data-key="07-08" contenteditable="true">-</td><td data-key="07-09" contenteditable="true">-</td><td data-key="07-10" contenteditable="true">-</td><td data-key="07-11" contenteditable="true">-</td><td data-key="07-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">08</td><td data-key="08-01" contenteditable="true">-</td><td data-key="08-02" contenteditable="true">-</td><td data-key="08-03" contenteditable="true">-</td><td data-key="08-04" contenteditable="true">-</td><td data-key="08-05" contenteditable="true">-</td><td data-key="08-06" contenteditable="true">-</td><td data-key="08-07" contenteditable="true">-</td><td data-key="08-08" contenteditable="true">-</td><td data-key="08-09" contenteditable="true">-</td><td data-key="08-10" contenteditable="true">-</td><td data-key="08-11" contenteditable="true">-</td><td data-key="08-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">09</td><td data-key="09-01" contenteditable="true">-</td><td data-key="09-02" contenteditable="true">-</td><td data-key="09-03" contenteditable="true">-</td><td data-key="09-04" contenteditable="true">-</td><td data-key="09-05" contenteditable="true">-</td><td data-key="09-06" contenteditable="true">-</td><td data-key="09-07" contenteditable="true">-</td><td data-key="09-08" contenteditable="true">-</td><td data-key="09-09" contenteditable="true">-</td><td data-key="09-10" contenteditable="true">-</td><td data-key="09-11" contenteditable="true">-</td><td data-key="09-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">10</td><td data-key="10-01" contenteditable="true">-</td><td data-key="10-02" contenteditable="true">-</td><td data-key="10-03" contenteditable="true">-</td><td data-key="10-04" contenteditable="true">-</td><td data-key="10-05" contenteditable="true">-</td><td data-key="10-06" contenteditable="true">-</td><td data-key="10-07" contenteditable="true">-</td><td data-key="10-08" contenteditable="true">-</td><td data-key="10-09" contenteditable="true">-</td><td data-key="10-10" contenteditable="true">-</td><td data-key="10-11" contenteditable="true">-</td><td data-key="10-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">11</td><td data-key="11-01" contenteditable="true">-</td><td data-key="11-02" contenteditable="true">-</td><td data-key="11-03" contenteditable="true">-</td><td data-key="11-04" contenteditable="true">-</td><td data-key="11-05" contenteditable="true">-</td><td data-key="11-06" contenteditable="true">-</td><td data-key="11-07" contenteditable="true">-</td><td data-key="11-08" contenteditable="true">-</td><td data-key="11-09" contenteditable="true">-</td><td data-key="11-10" contenteditable="true">-</td><td data-key="11-11" contenteditable="true">-</td><td data-key="11-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">12</td><td data-key="12-01" contenteditable="true">-</td><td data-key="12-02" contenteditable="true">-</td><td data-key="12-03" contenteditable="true">-</td><td data-key="12-04" contenteditable="true">-</td><td data-key="12-05" contenteditable="true">-</td><td data-key="12-06" contenteditable="true">-</td><td data-key="12-07" contenteditable="true">-</td><td data-key="12-08" contenteditable="true">-</td><td data-key="12-09" contenteditable="true">-</td><td data-key="12-10" contenteditable="true">-</td><td data-key="12-11" contenteditable="true">-</td><td data-key="12-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">13</td><td data-key="13-01" contenteditable="true">-</td><td data-key="13-02" contenteditable="true">-</td><td data-key="13-03" contenteditable="true">-</td><td data-key="13-04" contenteditable="true">-</td><td data-key="13-05" contenteditable="true">-</td><td data-key="13-06" contenteditable="true">-</td><td data-key="13-07" contenteditable="true">-</td><td data-key="13-08" contenteditable="true">-</td><td data-key="13-09" contenteditable="true">-</td><td data-key="13-10" contenteditable="true">-</td><td data-key="13-11" contenteditable="true">-</td><td data-key="13-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">14</td><td data-key="14-01" contenteditable="true">-</td><td data-key="14-02" contenteditable="true">-</td><td data-key="14-03" contenteditable="true">-</td><td data-key="14-04" contenteditable="true">-</td><td data-key="14-05" contenteditable="true">-</td><td data-key="14-06" contenteditable="true">-</td><td data-key="14-07" contenteditable="true">-</td><td data-key="14-08" contenteditable="true">-</td><td data-key="14-09" contenteditable="true">-</td><td data-key="14-10" contenteditable="true">-</td><td data-key="14-11" contenteditable="true">-</td><td data-key="14-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">15</td><td data-key="15-01" contenteditable="true">-</td><td data-key="15-02" contenteditable="true">-</td><td data-key="15-03" contenteditable="true">-</td><td data-key="15-04" contenteditable="true">-</td><td data-key="15-05" contenteditable="true">-</td><td data-key="15-06" contenteditable="true">-</td><td data-key="15-07" contenteditable="true">-</td><td data-key="15-08" contenteditable="true">-</td><td data-key="15-09" contenteditable="true">-</td><td data-key="15-10" contenteditable="true">-</td><td data-key="15-11" contenteditable="true">-</td><td data-key="15-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">16</td><td data-key="16-01" contenteditable="true">-</td><td data-key="16-02" contenteditable="true">-</td><td data-key="16-03" contenteditable="true">-</td><td data-key="16-04" contenteditable="true">-</td><td data-key="16-05" contenteditable="true">-</td><td data-key="16-06" contenteditable="true">-</td><td data-key="16-07" contenteditable="true">-</td><td data-key="16-08" contenteditable="true">-</td><td data-key="16-09" contenteditable="true">-</td><td data-key="16-10" contenteditable="true">-</td><td data-key="16-11" contenteditable="true">-</td><td data-key="16-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">17</td><td data-key="17-01" contenteditable="true">-</td><td data-key="17-02" contenteditable="true">-</td><td data-key="17-03" contenteditable="true">-</td><td data-key="17-04" contenteditable="true">-</td><td data-key="17-05" contenteditable="true">-</td><td data-key="17-06" contenteditable="true">-</td><td data-key="17-07" contenteditable="true">-</td><td data-key="17-08" contenteditable="true">-</td><td data-key="17-09" contenteditable="true">-</td><td data-key="17-10" contenteditable="true">-</td><td data-key="17-11" contenteditable="true">-</td><td data-key="17-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">18</td><td data-key="18-01" contenteditable="true">-</td><td data-key="18-02" contenteditable="true">-</td><td data-key="18-03" contenteditable="true">-</td><td data-key="18-04" contenteditable="true">-</td><td data-key="18-05" contenteditable="true">-</td><td data-key="18-06" contenteditable="true">-</td><td data-key="18-07" contenteditable="true">-</td><td data-key="18-08" contenteditable="true">-</td><td data-key="18-09" contenteditable="true">-</td><td data-key="18-10" contenteditable="true">-</td><td data-key="18-11" contenteditable="true">-</td><td data-key="18-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">19</td><td data-key="19-01" contenteditable="true">-</td><td data-key="19-02" contenteditable="true">-</td><td data-key="19-03" contenteditable="true">-</td><td data-key="19-04" contenteditable="true">-</td><td data-key="19-05" contenteditable="true">-</td><td data-key="19-06" contenteditable="true">-</td><td data-key="19-07" contenteditable="true">-</td><td data-key="19-08" contenteditable="true">-</td><td data-key="19-09" contenteditable="true">-</td><td data-key="19-10" contenteditable="true">-</td><td data-key="19-11" contenteditable="true">-</td><td data-key="19-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">20</td><td data-key="20-01" contenteditable="true">-</td><td data-key="20-02" contenteditable="true">-</td><td data-key="20-03" contenteditable="true">-</td><td data-key="20-04" contenteditable="true">-</td><td data-key="20-05" contenteditable="true">-</td><td data-key="20-06" contenteditable="true">-</td><td data-key="20-07" contenteditable="true">-</td><td data-key="20-08" contenteditable="true">-</td><td data-key="20-09" contenteditable="true">-</td><td data-key="20-10" contenteditable="true">-</td><td data-key="20-11" contenteditable="true">-</td><td data-key="20-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">21</td><td data-key="21-01" contenteditable="true">-</td><td data-key="21-02" contenteditable="true">-</td><td data-key="21-03" contenteditable="true">-</td><td data-key="21-04" contenteditable="true">-</td><td data-key="21-05" contenteditable="true">-</td><td data-key="21-06" contenteditable="true">-</td><td data-key="21-07" contenteditable="true">-</td><td data-key="21-08" contenteditable="true">-</td><td data-key="21-09" contenteditable="true">-</td><td data-key="21-10" contenteditable="true">-</td><td data-key="21-11" contenteditable="true">-</td><td data-key="21-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">22</td><td data-key="22-01" contenteditable="true">-</td><td data-key="22-02" contenteditable="true">-</td><td data-key="22-03" contenteditable="true">-</td><td data-key="22-04" contenteditable="true">-</td><td data-key="22-05" contenteditable="true">-</td><td data-key="22-06" contenteditable="true">-</td><td data-key="22-07" contenteditable="true">-</td><td data-key="22-08" contenteditable="true">-</td><td data-key="22-09" contenteditable="true">-</td><td data-key="22-10" contenteditable="true">-</td><td data-key="22-11" contenteditable="true">-</td><td data-key="22-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">23</td><td data-key="23-01" contenteditable="true">-</td><td data-key="23-02" contenteditable="true">-</td><td data-key="23-03" contenteditable="true">-</td><td data-key="23-04" contenteditable="true">-</td><td data-key="23-05" contenteditable="true">-</td><td data-key="23-06" contenteditable="true">-</td><td data-key="23-07" contenteditable="true">-</td><td data-key="23-08" contenteditable="true">-</td><td data-key="23-09" contenteditable="true">-</td><td data-key="23-10" contenteditable="true">-</td><td data-key="23-11" contenteditable="true">-</td><td data-key="23-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">24</td><td data-key="24-01" contenteditable="true">-</td><td data-key="24-02" contenteditable="true">-</td><td data-key="24-03" contenteditable="true">-</td><td data-key="24-04" contenteditable="true">-</td><td data-key="24-05" contenteditable="true">-</td><td data-key="24-06" contenteditable="true">-</td><td data-key="24-07" contenteditable="true">-</td><td data-key="24-08" contenteditable="true">-</td><td data-key="24-09" contenteditable="true">-</td><td data-key="24-10" contenteditable="true">-</td><td data-key="24-11" contenteditable="true">-</td><td data-key="24-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">25</td><td data-key="25-01" contenteditable="true">-</td><td data-key="25-02" contenteditable="true">-</td><td data-key="25-03" contenteditable="true">-</td><td data-key="25-04" contenteditable="true">-</td><td data-key="25-05" contenteditable="true">-</td><td data-key="25-06" contenteditable="true">-</td><td data-key="25-07" contenteditable="true">-</td><td data-key="25-08" contenteditable="true">-</td><td data-key="25-09" contenteditable="true">-</td><td data-key="25-10" contenteditable="true">-</td><td data-key="25-11" contenteditable="true">-</td><td data-key="25-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">26</td><td data-key="26-01" contenteditable="true">-</td><td data-key="26-02" contenteditable="true">-</td><td data-key="26-03" contenteditable="true">-</td><td data-key="26-04" contenteditable="true">-</td><td data-key="26-05" contenteditable="true">-</td><td data-key="26-06" contenteditable="true">-</td><td data-key="26-07" contenteditable="true">-</td><td data-key="26-08" contenteditable="true">-</td><td data-key="26-09" contenteditable="true">-</td><td data-key="26-10" contenteditable="true">-</td><td data-key="26-11" contenteditable="true">-</td><td data-key="26-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">27</td><td data-key="27-01" contenteditable="true">-</td><td data-key="27-02" contenteditable="true">-</td><td data-key="27-03" contenteditable="true">-</td><td data-key="27-04" contenteditable="true">-</td><td data-key="27-05" contenteditable="true">-</td><td data-key="27-06" contenteditable="true">-</td><td data-key="27-07" contenteditable="true">-</td><td data-key="27-08" contenteditable="true">-</td><td data-key="27-09" contenteditable="true">-</td><td data-key="27-10" contenteditable="true">-</td><td data-key="27-11" contenteditable="true">-</td><td data-key="27-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">28</td><td data-key="28-01" contenteditable="true">-</td><td data-key="28-02" contenteditable="true">-</td><td data-key="28-03" contenteditable="true">-</td><td data-key="28-04" contenteditable="true">-</td><td data-key="28-05" contenteditable="true">-</td><td data-key="28-06" contenteditable="true">-</td><td data-key="28-07" contenteditable="true">-</td><td data-key="28-08" contenteditable="true">-</td><td data-key="28-09" contenteditable="true">-</td><td data-key="28-10" contenteditable="true">-</td><td data-key="28-11" contenteditable="true">-</td><td data-key="28-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">29</td><td data-key="29-01" contenteditable="true">-</td><td data-key="29-02" contenteditable="true">-</td><td data-key="29-03" contenteditable="true">-</td><td data-key="29-04" contenteditable="true">-</td><td data-key="29-05" contenteditable="true">-</td><td data-key="29-06" contenteditable="true">-</td><td data-key="29-07" contenteditable="true">-</td><td data-key="29-08" contenteditable="true">-</td><td data-key="29-09" contenteditable="true">-</td><td data-key="29-10" contenteditable="true">-</td><td data-key="29-11" contenteditable="true">-</td><td data-key="29-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">30</td><td data-key="30-01" contenteditable="true">-</td><td data-key="30-02" contenteditable="true">-</td><td data-key="30-03" contenteditable="true">-</td><td data-key="30-04" contenteditable="true">-</td><td data-key="30-05" contenteditable="true">-</td><td data-key="30-06" contenteditable="true">-</td><td data-key="30-07" contenteditable="true">-</td><td data-key="30-08" contenteditable="true">19</td><td data-key="30-09" contenteditable="true">-</td><td data-key="30-10" contenteditable="true">-</td><td data-key="30-11" contenteditable="true">-</td><td data-key="30-12" contenteditable="true">-</td></tr><tr contenteditable="false"><td contenteditable="true">31</td><td data-key="31-01" contenteditable="true">-</td><td data-key="31-02" contenteditable="true">-</td><td data-key="31-03" contenteditable="true">-</td><td data-key="31-04" contenteditable="true">-</td><td data-key="31-05" contenteditable="true">-</td><td data-key="31-06" contenteditable="true">-</td><td data-key="31-07" contenteditable="true">-</td><td data-key="31-08" contenteditable="true">-</td><td data-key="31-09" contenteditable="true">-</td><td data-key="31-10" contenteditable="true">-</td><td data-key="31-11" contenteditable="true">-</td><td data-key="31-12" contenteditable="true">-</td></tr></tbody></table>
+  </div>
+
+  <script src="site-config.js" contenteditable="false"></script>
+  <script contenteditable="false">
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const isAdmin = params.get('admin') === '1' || params.get('admin') === 1 || params.get('admin') === true;
+      const year = String(params.get('year') || new Date().getFullYear());
+      // Derive game: from query ?game=... or from path /year-<slug>.html
+      const fromQuery = params.get('game');
+      let displayGame;
+      let apiGame;
+      if (fromQuery && fromQuery.trim()) {
+        // fromQuery is a slug like "delhi-bazar"; use slug for API, pretty for display
+        apiGame = fromQuery.trim();
+        displayGame = apiGame
+          .split('-')
+          .filter(Boolean)
+          .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' ');
+      } else {
+        const m = (location.pathname || '').match(/\byear-([a-z0-9-]+)\.html$/);
+        if (m && m[1]) {
+          const slug = m[1];
+          apiGame = slug;
+          displayGame = slug
+            .split('-')
+            .filter(Boolean)
+            .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+            .join(' ');
+        } else {
+          apiGame = 'game';
+          displayGame = 'GAME';
+        }
+      }
+
+      // Title: always show "<GAME> - <YEAR> CHART" at top
+      const titleEl = document.getElementById('gameTitle');
+      if (titleEl) {
+        titleEl.textContent = `${displayGame} - ${year} CHART`;
+      }
+      try { document.title = `${displayGame} ${year} Chart`; } catch {}
+
+      // Months header
+      const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+      const table = document.getElementById('yearTable');
+      const hasContent = table && table.children && table.children.length > 0;
+
+      function storageKey(g, y){ return `yearchart:${g.toLowerCase()}:${y}`; }
+      function loadLocal(g, y){ try { return JSON.parse(localStorage.getItem(storageKey(g,y)) || '{}'); } catch { return {}; } }
+      function saveLocal(g, y, obj){ try { localStorage.setItem(storageKey(g,y), JSON.stringify(obj||{})); } catch (e){} }
+      // Extract the current (right-side) number from a value like "72 58" -> "58"
+      function currentNumber(val){
+        const s = String(val == null ? '' : val).trim();
+        const matches = s.match(/\d+/g) || [];
+        if (!matches.length) return '';
+        return matches[matches.length - 1];
+      }
+      async function fetchChart(g, y){
+        // API reads disabled: rely only on localStorage
+        return loadLocal(g, y);
+      }
+      async function saveChart(g, y, key, value){
+        const cur = loadLocal(g, y);
+        if (value === '' || value == null) { delete cur[key]; } else { cur[key] = value; }
+        saveLocal(g, y, cur);
+        // Server write disabled: no POST to /api/chart
+      }
+      function applyYearHeader(y){
+        const thead = table.querySelector('thead') || table.createTHead();
+        let row = thead.querySelector('tr');
+        if (!row) { row = document.createElement('tr'); thead.appendChild(row); }
+        let first = row.querySelector('th');
+        if (!first) { first = document.createElement('th'); row.insertBefore(first, row.firstChild); }
+        first.textContent = `${displayGame} - ${y}`;
+      }
+      function applyDataToTable(data){
+        const tbody = table.querySelector('tbody');
+        if (!tbody) return;
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        rows.forEach(tr => {
+          const cells = Array.from(tr.querySelectorAll('td'));
+          if (cells.length === 0) return;
+          // cells[0] is day; rest are months with data-key
+          for (let i = 1; i < cells.length; i++) {
+            const td = cells[i];
+            const key = td.dataset.key; // DD-MM
+            if (!key) continue;
+            const raw = Object.prototype.hasOwnProperty.call(data, key) ? data[key] : '-';
+            const disp = raw === '-' ? '-' : (currentNumber(raw) || '-');
+            td.textContent = disp;
+          }
+        });
+      }
+      function bindAdminEditing(g, y){
+        if (!isAdmin) return;
+        const tbody = table.querySelector('tbody');
+        if (!tbody) return;
+        tbody.addEventListener('input', onChange);
+        tbody.addEventListener('blur', onChange, true);
+        async function onChange(e){
+          const td = e.target && e.target.closest && e.target.closest('td[data-key]');
+          if (!td) return;
+          const k = td.dataset.key;
+          const vRaw = (td.textContent||'').trim();
+          const v = currentNumber(vRaw);
+          td.textContent = v || '-';
+          await saveChart(g, y, k, v);
+        }
+      }
+
+      if (!hasContent) {
+        // Build table only if not already present (so admin-saved HTML persists)
+        const thead = document.createElement('thead');
+        const headRow = document.createElement('tr');
+        const yearTh = document.createElement('th');
+        yearTh.textContent = year;
+        headRow.appendChild(yearTh);
+
+        months.forEach(m => {
+          const th = document.createElement('th');
+          th.textContent = m;
+          headRow.appendChild(th);
+        });
+
+        thead.appendChild(headRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        const saved = {};
+
+        // 31 rows, 12 months -> cells (editable only for admins)
+        for (let day = 1; day <= 31; day++) {
+          const tr = document.createElement('tr');
+          const dayCell = document.createElement('td');
+          dayCell.textContent = String(day).padStart(2, '0');
+          tr.appendChild(dayCell);
+
+          for (let m = 0; m < 12; m++) {
+            const td = document.createElement('td');
+            const key = `${String(day).padStart(2,'0')}-${String(m+1).padStart(2,'0')}`; // DD-MM
+            td.dataset.key = key;
+            td.textContent = saved[key] ?? '-';
+
+            tr.appendChild(td);
+          }
+          tbody.appendChild(tr);
+        }
+        table.appendChild(tbody);
+      }
+
+      // Always ensure the visible content matches the requested year
+      applyYearHeader(year);
+      (async function(){
+        const data = await fetchChart(apiGame, year);
+        applyDataToTable(data);
+      })();
+      // Live-sync across tabs: update table when localStorage for this game/year changes
+      window.addEventListener('storage', (e) => {
+        try {
+          if (!e || e.key !== storageKey(apiGame, year)) return;
+          const next = JSON.parse(e.newValue || '{}');
+          if (next && typeof next === 'object') {
+            applyDataToTable(next);
+          }
+        } catch(_){ }
+      });
+      bindAdminEditing(apiGame, year);
+
+      // If admin mode, ensure cells are editable (non-first column)
+      if (isAdmin && table) {
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(tr => {
+          const tds = tr.querySelectorAll('td');
+          tds.forEach((td, idx) => {
+            if (idx === 0) return; // day column
+            td.setAttribute('contenteditable', 'true');
+          });
+        });
+      }
+    })();
+  </script>
+
+
+</body></html>

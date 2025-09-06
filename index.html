@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en" data-windsurf-page-id="578665421" data-windsurf-extension-id="foefnacdoacilokpfgininpfjnmlfikg"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lucky Satta</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecokDS8y5bihl46j8A5d6RyWUE00s8mXWURyblb" crossorigin="anonymous">
+    <link rel="stylesheet" href="bootstrap-theme.css">
+    <style>
+      /* Keep game names (e.g., SADAR BAZAR) on one line */
+      .gamenameeach { white-space: nowrap; display: inline-block; }
+      /* Blink disabled to prevent any potential animation-induced jank */
+      .blink { animation: none !important; opacity: 1 !important; }
+      /* Opt-in blinking for specific elements */
+      @keyframes blinker { 50% { opacity: 0; } }
+      .blink-on { animation: blinker 1s step-end infinite; }
+      /* Keep waiting gif consistent */
+      .waitimg img { width: 40px !important; height: 40px !important; }
+      /* Make the main logo a bit bigger */
+      .sattalogo h1 { font-size: 72px !important; }
+      @media (max-width: 1000px) { .sattalogo h1 { font-size: 42px !important; } }
+
+      /* Home results table: grey background instead of white for value columns */
+      .tablebox1 .table tbody tr td:not(:first-child) { background-color: #f1f1f1 !important; }
+      /* Preserve grey on striped tables */
+      .tablebox1 .table.table-striped > tbody > tr:nth-of-type(odd) > td:not(:first-child) { background-color: #f1f1f1 !important; }
+      /* Hover state slightly darker grey */
+      .tablebox1 .table-hover > tbody > tr:hover > td:not(:first-child) { background-color: #e7e7e7 !important; }
+      /* Normalize wait.gif size in both columns */
+      .tablebox1 .waitimg img { width: 40px !important; height: 40px !important; }
+      /* Column font sizes for better readability on grey */
+      .tablebox1 table tbody tr td:nth-child(2),
+      .tablebox1 table tbody tr td:nth-child(3) {
+        font-size: 40px !important;
+        font-weight: 600 !important;
+        color: #111;
+        text-align: center;
+        line-height: 1.1;
+        vertical-align: middle !important;
+        padding: 12px 8px !important;
+      }
+      /* Latest update pill under the logo */
+      #latest-update { text-align: center; margin: 10px 0 20px; }
+      #latest-update .pill { display: inline-block; background: #ff6d3a; color: #fff; border-radius: 12px; padding: 6px 12px; font-weight: 700; letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,.15); }
+      #latest-update .pill .name { margin-right: 8px; }
+      #latest-update .pill .value { background: #fff; color: #ff6d3a; border-radius: 8px; padding: 2px 8px; font-weight: 800; }
+
+      /* Notice styles (reusable) */
+      .topnotice { text-align: center; padding: 8px 12px; background: #fff7d6; border-bottom: 1px solid rgba(0,0,0,.08); font-weight: 700; }
+      .topnotice .msg { display: inline-block; background: #ff6d3a; color: #fff; border-radius: 10px; padding: 6px 12px; }
+      .gamenotice { text-align: center; padding: 8px 0 6px; margin-bottom: 14px; }
+      .gamenotice .msg { display: inline-block; background: #ff6d3a; color: #fff; border-radius: 10px; padding: 6px 12px; font-weight: 700; }
+
+      /* Featured box sizing (bigger) */
+      .sattaname p { font-size: 26px !important; font-weight: 800 !important; letter-spacing: 1px; display: inline-block; background: #fff; border: 3px solid #000; border-radius: 10px; padding: 6px 12px; }
+      .sattaresult span { display: inline-flex; align-items: center; gap: 10px; padding: 6px 8px; background: transparent; border: 0; box-shadow: none; min-width: 0; }
+      .sattaresult span .num { display: inline-block; font-size: 56px; font-weight: 900; background: #fff; color: #000; padding: 8px 14px; border-radius: 10px; border: 3px solid #000; box-shadow: 0 3px 0 rgba(0,0,0,0.35); min-width: 78px; text-align: center; }
+      .sattaresult span .sep { font-size: 40px; font-weight: 900; color: #333; }
+      @media (max-width: 767px) {
+        .sattaresult span { gap: 8px; padding: 4px 6px; }
+        .sattaresult span .num { font-size: 42px; padding: 6px 10px; min-width: 64px; border-width: 2px; border-radius: 8px; box-shadow: 0 2px 0 rgba(0,0,0,0.35); }
+        .sattaresult span .sep { font-size: 30px; }
+      }
+      /* Separate rectangle box for DISAWER (gradient like reference) */
+      .featured-rect.disawer-hero { display: block; padding: 16px 18px; border: 1px solid #000; border-radius: 6px; background: linear-gradient(90deg, #ff7a00, #ffd400, #ff7a00); margin: 10px 0 18px; text-align: center; }
+      .disawer-hero .name { font-weight: 900; margin: 0; font-size: 45px; }
+      .disawer-hero .time { font-weight: 800; font-size: 35px; margin: 4px 0 10px; }
+      .disawer-hero .result { font-size: 35px; font-weight: 900; }
+      .disawer-hero .result .num { display: inline; background: transparent; border: 0; padding: 0; min-width: 0; box-shadow: none; }
+      .disawer-hero .result img.sep { width: 20px; height: 20px; vertical-align: middle; }
+      @media (max-width: 767px) {
+        .featured-rect.disawer-hero { padding: 12px 14px; }
+        .disawer-hero .name { font-size: 20px; }
+        .disawer-hero .time { font-size: 15px; }
+        .disawer-hero .result { font-size: 22px; }
+        .disawer-hero .result img.sep { width: 18px; height: 18px; }
+      }
+      /* Mobile table fixes */
+      @media (max-width: 767px) {
+        /* Allow game names to wrap on phones */
+        .gamenameeach { white-space: normal; }
+        /* Make table columns more compact */
+        .tablebox1 table tbody tr td:nth-child(2),
+        .tablebox1 table tbody tr td:nth-child(3) {
+          font-size: 28px !important;
+          padding: 8px 6px !important;
+          min-width: 72px;
+        }
+        .tablebox1 .waitimg img { width: 30px !important; height: 30px !important; }
+        .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Tighten header width a bit */
+        .tablebox1 thead th { padding: 8px 6px !important; font-size: 14px !important; }
+        /* Fix first column (सट्टा का नाम) to wrap and shrink */
+        .tablebox1 thead th:first-child { width: auto !important; }
+        .tablebox1 tbody td:first-child { max-width: 180px; white-space: normal !important; word-break: break-word; }
+        .tablebox1 tbody td:first-child a.gamenameeach { display: inline-block; font-size: 16px !important; line-height: 1.2; }
+        .tablebox1 tbody td:first-child { padding: 8px 6px !important; }
+      }
+    </style>
+<!-- Removed extra time updater interval (myTimer); GetClock below handles clock updates -->
+<script type="text/javascript">
+    var tmonth = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
+    function GetClock() {
+        var d = new Date();
+        var nmonth = d.getMonth(),
+            ndate = d.getDate(),
+            nyear = d.getFullYear();
+        var nhour = d.getHours(),
+            nmin = d.getMinutes(),
+            nsec = d.getSeconds(),
+            ap;
+        if (nhour == 0) {
+            ap = " AM";
+            nhour = 12;
+        } else if (nhour < 12) {
+            ap = " AM";
+        } else if (nhour == 12) {
+            ap = " PM";
+        } else if (nhour > 12) {
+            ap = " PM";
+            nhour -= 12;
+        }
+
+        if (nmin <= 9) nmin = "0" + nmin;
+        if (nsec <= 9) nsec = "0" + nsec;
+        document.getElementById('clockbox').innerHTML = "" + tmonth[nmonth] + " " + ndate + ", " + nyear + " " + nhour + ":" + nmin + ":" + nsec + ap + "";
+    }
+
+    window.onload = function() {
+        const usp = new URLSearchParams(location.search);
+        const SAFE_MODE = usp.get('safe') === '1';
+        GetClock();
+        // Update every 5s to reduce repaints (skip in safe mode)
+        if (!SAFE_MODE) {
+          setInterval(GetClock, 5000);
+        }
+    }
+</script>
+<!-- Removed JS blink; using CSS animation instead to prevent queue buildup -->
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-H4SER8FSVE');
+</script>
+<script id="windsurf-parent-injection-script" src="chrome-extension://foefnacdoacilokpfgininpfjnmlfikg/parent_injection.js" type="text/javascript"></script><style id="dom-selector-styles">
+      /* Apply cursor only when selection is active */
+      body[data-selector-active='true'] { cursor: pointer !important; }
+
+      /* Overlay styles */
+      #browser-preview-selection-overlay {
+        position: fixed;
+        pointer-events: none;
+        z-index: 2147483646;
+        transition: all 0.1s ease-in;
+        border: 2px solid #1a73e8;
+        background-color: #e8f0fe44;
+        display: none;
+        border-radius: 4px;
+      }
+
+      /* Banner styles */
+      #element-info-banner {
+        position: absolute;
+        background-color: #333;
+        color: white;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+        font-size: 12px;
+        line-height: 1.4;
+        z-index: 2147483647;
+        pointer-events: none;
+        white-space: nowrap;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        max-width: 450px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: opacity 0.1s ease-in-out;
+        opacity: 0;
+      }
+
+      #element-info-banner[data-visible="true"] {
+        opacity: 1;
+      }
+
+      #element-info-banner-arrow {
+        position: absolute;
+        background: #333;
+        width: 8px;
+        height: 8px;
+        transform: rotate(45deg);
+      }
+
+      /* Banner text styling */
+      #element-info-banner strong {
+          color: #87CEFA;
+          font-weight: bold;
+      }
+      #element-info-banner .selector-id {
+          color: #FFD700;
+          font-weight: normal;
+      }
+      #element-info-banner .selector-class {
+          color: #ADD8E6;
+          font-weight: normal;
+      }
+      #element-info-banner .react-component {
+          color: #98FB98;
+          font-style: italic;
+          margin-left: 4px;
+      }
+    </style>
+  <!-- Client-side auth guard: disable editing unless ?admin=1 and session is valid -->
+  <script>
+    (function(){
+      function snapshotEditable(){
+        try {
+          document.querySelectorAll('[contenteditable="true"]').forEach(function(el){
+            el.setAttribute('data-was-editable', '1');
+          });
+        } catch(_) {}
+      }
+      function lockEditing(){
+        try {
+          document.querySelectorAll('[contenteditable="true"]').forEach(function(el){
+            el.setAttribute('contenteditable', 'false');
+          });
+        } catch(_) {}
+      }
+      function unlockEditing(){
+        try {
+          document.querySelectorAll('[data-was-editable="1"]').forEach(function(el){
+            el.setAttribute('contenteditable', 'true');
+            el.removeAttribute('data-was-editable');
+          });
+        } catch(_) {}
+      }
+      function init(){
+        snapshotEditable();
+        var usp = new URLSearchParams(location.search);
+        var wantsAdmin = usp.get('admin') === '1';
+        if (!wantsAdmin) {
+          lockEditing();
+          return;
+        }
+        try {
+          fetch('/api/auth-check', { credentials: 'include' })
+            .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+            .then(function(j){ if (j && j.ok) { unlockEditing(); } else { lockEditing(); } })
+            .catch(function(){ lockEditing(); });
+        } catch(_) {
+          lockEditing();
+        }
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+    })();
+  </script>
+</head>
+
+<body>
+
+    <!-- ============================================================== -->
+    <!-- Menu Bars  -->
+    <!-- ============================================================== -->
+    <section class="topboxnew" contenteditable="false" style="">
+        <div class="container-fluid" contenteditable="false" style="">
+            <div class="col-md-12 nopadding" contenteditable="false" style="">
+                <div class="newnav" contenteditable="false" style="">
+                    <ul contenteditable="false" style="">
+                        <li contenteditable="false" style="">
+                            <a href="index.html" class="active" contenteditable="true" style="">HOME</a>
+                        </li>
+                        <li contenteditable="false" style="">
+                            <a href="chart.html" class="" contenteditable="true" style="">CHART</a>
+                        </li>
+                        <li contenteditable="false" style="">
+                            <a href="login.html" contenteditable="true" style="">LOGIN</a>
+                        </li>
+                    </ul>
+                    <div class="clearfix" contenteditable="false" style=""></div>
+                </div>
+                <div class="text_slide" contenteditable="false" style="">
+                    <marquee style="color: rgb(0, 0, 0);" onmouseover="this.stop();" onmouseout="this.start();" contenteditable="false"><b contenteditable="true" data-key="home.marquee" style="outline: rgb(153, 153, 153) dashed 1px;">Daily Superfast Lucky Satta Result of July 2021 And Leak Numbers for Gali, Desawar, Ghaziabad and Faridabad With Complete Lucky Satta 2019 Chart And Lucky Satta 2018 Chart From Lucky Satta Fast, Lucky Satta Fast Result, Lucky Satta Desawar 2019, Lucky Satta Desawar 2018.</b></marquee>
+                </div>
+            </div>
+        </div>
+</section>
+
+<!-- ============================================================== -->
+    <!-- Menu Bars  -->
+    <!-- ============================================================== -->
+    <section class="sattalogo" contenteditable="false" style="">
+        <div class="container" contenteditable="false" style="">
+            <div class="row" contenteditable="false" style="">
+                <div class="col-md-12 text-center" contenteditable="false" style="">
+                    <h1 contenteditable="false" style=""><a href="" class="blink-on" style="display: inline;" contenteditable="true">LUCKY-SATTA</a></h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest updated game pill (unused now; we update featured box instead) -->
+    <div id="latest-update" aria-live="polite" contenteditable="false" style=""></div>
+
+    <section class="circlebox" style="">
+        <div class="container" style="">
+            <div class="row" style="">
+                <div class="col-md-12 text-center" style="">
+                    <div class="liveresult" contenteditable="false" style="">
+                        <div class="datetime" contenteditable="false" style="">
+                            <div id="clockbox" contenteditable="true" style="">September 6, 2025 2:04:02 PM</div>
+                        </div>
+                    </div>
+
+
+
+                    <hr style="height: 2px; opacity: 0.9;" contenteditable="false">
+                    <div class="gamenotice" contenteditable="false" style=""><span class="msg" contenteditable="true" data-key="home.notice" style="outline: rgb(153, 153, 153) dashed 1px;">हा भाई यही आती हे सबसे पहले खबर रूको और देखो</span></div>
+                    <div class="sattaname" contenteditable="true" style="outline: rgb(153, 153, 153) dashed 1px; user-select: text; pointer-events: auto;" tabindex="0">
+                        <p contenteditable="true" data-key="home.top.name" style="user-select: text; pointer-events: auto; outline: rgb(153, 153, 153) dashed 1px;" tabindex="0">SADAR BAZAR</p>
+                    </div>
+                    <div class="sattaresult" contenteditable="false" style="">
+                        <font contenteditable="false" style=""><span contenteditable="false" style=""><span class="num" contenteditable="true">45</span></span></font>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="callbox" contenteditable="false" style="">
+        <div class="text-center" contenteditable="false" style="">
+            <div style="position: relative; min-height: 1px; padding-right: 0px; padding-left: 0px;" contenteditable="false">
+                <div class="card" style="box-sizing: border-box; position: relative; display: flex; flex-direction: column; min-width: 0px; overflow-wrap: break-word; background-clip: border-box; border: 0px; border-radius: 0.25rem;" contenteditable="false">
+                    <div class="card-body" style="box-sizing: border-box; flex: 1 1 auto; min-height: 1px; padding: 1.25rem; border: dashed red; background: linear-gradient(rgb(255, 216, 0), rgb(255, 255, 255)); border-radius: 20px; line-height: 15px;" contenteditable="false">
+                        <p class="blink-on" style="display: block;" contenteditable="false"><strong contenteditable="true" data-key="home.banner.whatsapp" style="outline: rgb(153, 153, 153) dashed 1px;">&nbsp;अब WhatsApp के players भी जल्दी रेिजल्ट पाने کے लिए हमारे WhatsApp के चैनल को Join करे और Superfast रेिजल्ट पाए</strong></p>
+                        <a href="https://whatsapp.com/" target="_blank" contenteditable="false" style=""><img src="https://lucky-satta.com/whatsAppChat.png" style="height: 80px; margin: auto; width: 230px;" contenteditable="false"></a>
+                        <!-- <p class=""><strong>&nbsp;अब WhatsApp के players भी जल्दी रेिजल्ट पाने के लिए हमारे WhatsApp के चैनल को Join करे और Superfast रेिजल्ट पाए</strong></p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="callbox" contenteditable="false" style="">
+        <div class="text-center" contenteditable="false" style="">
+            <div style="position: relative; min-height: 1px; padding-right: 0px; padding-left: 0px;" contenteditable="false">
+                <div class="card" style="box-sizing: border-box; position: relative; display: flex; flex-direction: column; min-width: 0px; overflow-wrap: break-word; background-clip: border-box; border: 0px; border-radius: 0.25rem;" contenteditable="false">
+                    <div class="card-body" style="box-sizing: border-box; flex: 1 1 auto; min-height: 1px; padding: 1.25rem; border: dashed red; background: linear-gradient(rgb(255, 216, 0), rgb(255, 255, 255)); border-radius: 20px; line-height: 15px;" contenteditable="false">
+                        <p class="blink-on" style="display: block;" contenteditable="false"><strong contenteditable="true" data-key="home.banner.telegram" style="outline: rgb(153, 153, 153) dashed 1px;">&nbsp;अब टेलीग्राम के players भी जल्दी रेिजल्ट पाने के लिए हमारे टेलीग्राम के चैनल को Join करे और Superfast रेिजल्ट पाए</strong></p>
+                        <a href="https://t.me/BANSALBHAI1" target="_blank" contenteditable="false" style=""><img src="https://lucky-satta.com/telegramChannel.png" style="height: 80px; margin: auto; width: 80px;" contenteditable="false"></a>
+                        <!-- <p class=""><strong>&nbsp;अब टेलीग्राम के players भी जल्दी रेिजल्ट पाने के लिए हमारे टेलीग्राम के चैनल को Join करे और Superfast रेिजल्ट पाए</strong></p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <section class="sattadividerr" style="">
+        <div class="container" style="">
+            <div class="col-md-12 text-center" style="">
+                <div class="featured-rect disawer-hero">
+                  <a href="/chart/2/2025" class="gamenameeach" contenteditable="false" style="display:block; margin-bottom: 4px;">
+                      <h3 class="name" contenteditable="true" data-key="home.disawer.name" style="margin: 0px; outline: rgb(153, 153, 153) dashed 1px;">DISAWER</h3>
+                  </a>
+                  <div class="time" contenteditable="true" data-key="home.disawer.time" tabindex="0" style="user-select: text; pointer-events: auto; outline: rgb(153, 153, 153) dashed 1px;">05:10 AM</div>
+                  <div class="result">
+                    <span class="num" contenteditable="true" tabindex="0" style="pointer-events: auto; user-select: text; outline: rgb(153, 153, 153) dashed 1px;">45</span>
+                    &nbsp;<img class="sep" src="uploads/arrow.gif" alt="&gt;" contenteditable="false">&nbsp;
+                    <span class="num" contenteditable="true" tabindex="0" style="pointer-events: auto; user-select: text; outline: rgb(153, 153, 153) dashed 1px;"></span>
+                  </div>
+                </div>
+
+                <style contenteditable="false" style="">
+                  /* Make today's result numbers bigger and darker */
+                  .tablebox1 table tbody tr td:nth-child(3) {
+                    font-size: 22px; /* bigger */
+                    font-weight: 700; /* bolder */
+                    color: #111; /* darker */
+                    text-align: center;
+                  }
+                  /* Improve editability of DISAWER featured numbers */
+                  .featured-rect .result .num {
+                    display: inline-block;
+                    min-width: 2.5ch; /* even when empty it's clickable */
+                    padding: 2px 6px;
+                    line-height: 1.2;
+                    cursor: text;
+                  }
+                  .featured-rect .result img.sep { vertical-align: middle; }
+                </style>
+                <div contenteditable="false" style="">&nbsp;</div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="callbox" contenteditable="false" style="">
+        <div class="text-center" contenteditable="false" style="">
+            <div style="position: relative; min-height: 1px; padding-right: 0px; padding-left: 0px;" contenteditable="false">
+                <div class="card" style="box-sizing: border-box; position: relative; display: flex; flex-direction: column; min-width: 0px; overflow-wrap: break-word; background-clip: border-box; border: 0px; border-radius: 0.25rem;" contenteditable="false">
+                    <div class="card-body" style="box-sizing: border-box; flex: 1 1 auto; min-height: 1px; padding: 1.25rem; border: dashed red; background: linear-gradient(rgb(255, 216, 0), rgb(255, 255, 255)); border-radius: 20px; line-height: 15px;" contenteditable="false">
+                        <p contenteditable="false" style=""><strong contenteditable="true" style="">सीधे सट्टा कंपनी का No 1 खाईवाल</strong></p>
+                        <p contenteditable="false" style=""><strong contenteditable="true" style="">♕</strong><strong contenteditable="true" style="">♕</strong><strong style="font-size: 20px;" contenteditable="true">&nbsp; VIRAJ BHAI  KHAIWAL ♕♕</strong></p>
+                        <p contenteditable="false" style=""><big contenteditable="false" style=""><strong contenteditable="true" style="">⏰ सदर बाजार ---------- 1:20 pm</strong></big></p>
+
+                        <p contenteditable="false" style=""><big contenteditable="false" style=""><strong contenteditable="true" style="">⏰ ग्वालियर ------------- 2:20 pm</strong></big></p>
+
+                        <p contenteditable="false" style=""><big contenteditable="false" style=""><strong contenteditable="true" style="">⏰ दिल्ली बाजार&nbsp;--------- 2:55 Pm</strong></big></p>
+
+                        <p contenteditable="false" style=""><big contenteditable="false" style=""><strong contenteditable="true" style="">⏰ सहारनपुरसिटी ------------&nbsp; 3:50 pm</strong></big></p>
+
+                        <p contenteditable="false" style=""><big contenteditable="false" style=""><strong contenteditable="true" style="">⏰ श्री गणेश  --------- ------ 4:20&nbsp;pm</strong></big></p>
+
+                        <p contenteditable="false" style=""><big contenteditable="false" style=""><strong contenteditable="true" style="">⏰ फरीदाबाद -------------5:50 pm</strong></big></p>
+
+                        <p contenteditable="false" style=""><big contenteditable="false" style=""><strong contenteditable="true" style="">⏰ शिमला सुपर --------- ------ 7:20 pm</strong></big></p>
+
+                        <p contenteditable="false" style=""><big contenteditable="false" style=""><strong contenteditable="true" style="">⏰ गाज़ियाबाद ----------- 8:50 pm</strong></big></p>
+
+                        <p contenteditable="false" style=""><big contenteditable="false" style=""><strong contenteditable="true" style="">⏰ बिलासपुर ---------------10:15&nbsp;pm</strong></big></p>
+
+                        <p contenteditable="false" style=""><big contenteditable="false" style=""><strong contenteditable="true" style="">⏰ गली ----------------- 11:20 pm</strong></big></p>
+
+                        <p contenteditable="false" style=""><big contenteditable="false" style=""><strong contenteditable="true" style="">⏰ दिसावर -------------- 1:30 Am</strong></big></p>
+                        <!-- <p><strong>♕</strong><strong>♕&nbsp;PAYMENT OPTION♕♕</strong></p>
+                                                <p><strong>PAYTM//BANK TRANSFER//PHONE PAY//GOOGLE PAY=&lt;⏺️</strong>9588341844<strong>⏺️</strong></p>
+                                                <p><strong>====================================</strong></p>
+                                                <p><strong>====================================</strong></p> -->
+                        <p contenteditable="false" style=""><strong contenteditable="true" style="">♕</strong><strong contenteditable="true" style="">♕ जोड़ी रेट</strong><strong contenteditable="true" style="">♕</strong><strong contenteditable="true" style="">♕</strong></p>
+                        <p contenteditable="false" style=""><strong contenteditable="true" style="">जोड़ी रेट 10-------960</strong></p>
+                        <p contenteditable="false" style=""><strong contenteditable="true" style="">हरूफ रेट 100-----960</strong></p>
+                        <p contenteditable="false" style=""><strong style="font-size: 20px;" contenteditable="true">♕♕ VIRAJ BHAI  KHAIWAL&nbsp;♕♕</strong></p>
+                        <h3 contenteditable="false" style=""><a href="https://Wa.me/" target="_blank" contenteditable="false" style=""><strong contenteditable="true" style="">Game Play करने के लिये नीचे लिंक पर क्लिक करे</strong></a></h3>
+                        <p contenteditable="false" style="">
+                            <a href="https://Wa.me/" target="_blank" contenteditable="false" style=""><img src="https://lucky-satta.com/whatsAppChat.png" style="height: 80px; margin: auto; width: 230px;" contenteditable="false"></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="tablebox1" style="" contenteditable="false">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 nopadding">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead class="foryellow" contenteditable="false" style="">
+                                <tr contenteditable="false" style="">
+                                    <th class="col-md-4 text-center" style="width: 37%;" contenteditable="true">सट्टा का नाम</th>
+                                    <th class="col-md-4 text-center" contenteditable="true" style="">कल आया था</th>
+                                    <th class="col-md-4 text-center" contenteditable="true" style="">आज का रिज़ल्ट</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+
+
+                                <tr>
+                                    <td class="forYellowGradient" contenteditable="false" style="">
+                                        <span class="gamenameeach" contenteditable="true" data-key="home.table.sadar-bazar.name" style="outline: rgb(153, 153, 153) dashed 1px;">SADAR BAZAR</span>
+                                        <br contenteditable="false" style=""> <span contenteditable="true" data-key="home.table.sadar-bazar.time" style="outline: rgb(153, 153, 153) dashed 1px;">01:10 AM</span> <br contenteditable="false" style="">
+                                    </td>
+                                    <td contenteditable="true" style="">88</td>
+                                    <td contenteditable="true" style="user-select: text; pointer-events: auto; outline: rgb(153, 153, 153) dashed 1px;" tabindex="0">45</td>
+                                </tr>
+
+
+
+
+                                <tr>
+                                    <td class="forYellowGradient" contenteditable="false" style="">
+                                        <span class="gamenameeach" contenteditable="true" data-key="home.table.gwalior.name" style="outline: rgb(153, 153, 153) dashed 1px;">GWALIOR</span>
+                                        <br contenteditable="false" style=""> <span contenteditable="true" data-key="home.table.gwalior.time" style="outline: rgb(153, 153, 153) dashed 1px;">02:50 PM</span> <br contenteditable="false" style="">
+                                    </td>
+                                    <td contenteditable="true" style="">19</td>
+                                    <td contenteditable="true" style="user-select: text; pointer-events: auto; outline: rgb(153, 153, 153) dashed 1px;" tabindex="0"><strong class="waitimg" contenteditable="false"><img src="uploads/wait.gif" class="img-responsive" width="30" height="30" contenteditable="false"></strong></td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td class="forYellowGradient" contenteditable="false" style="">
+                                        <span class="gamenameeach" contenteditable="true" data-key="home.table.delhi-bazar.name" style="outline: rgb(153, 153, 153) dashed 1px;">DELHI BAZAR</span>
+                                        <br contenteditable="false" style=""> <span contenteditable="true" data-key="home.table.delhi-bazar.time" style="outline: rgb(153, 153, 153) dashed 1px;">03:15 PM</span> <br contenteditable="false" style="">
+                                    </td>
+                                    <td contenteditable="true" style="">81</td>
+                                    <td contenteditable="true" style="user-select: text; pointer-events: auto; outline: rgb(153, 153, 153) dashed 1px;" tabindex="0"><strong class="waitimg" contenteditable="false"><img src="uploads/wait.gif" class="img-responsive" width="30" height="30" contenteditable="false"></strong></td>
+                                </tr>
+
+                                <tr>
+                                    <td class="forYellowGradient" contenteditable="false" style="">
+                                        <span class="gamenameeach" contenteditable="true" data-key="home.table.saharanpur-city.name" style="outline: rgb(153, 153, 153) dashed 1px;">Saharanpur City</span>
+                                        <br contenteditable="false" style=""> <span contenteditable="true" data-key="home.table.saharanpur-city.time" style="outline: rgb(153, 153, 153) dashed 1px;">04:00 PM</span> <br contenteditable="false" style="">
+                                    </td>
+                                    <td contenteditable="true" style="">75</td>
+                                    <td contenteditable="true" style="user-select: text; pointer-events: auto; outline: rgb(153, 153, 153) dashed 1px;" tabindex="0"><strong class="waitimg" contenteditable="false"><img src="uploads/wait.gif" class="img-responsive" width="30" height="30" contenteditable="false"></strong></td>
+                                </tr>
+
+                                <tr>
+                                    <td class="forYellowGradient" contenteditable="false" style="">
+                                        <span class="gamenameeach" contenteditable="true" data-key="home.table.shri-ganesh.name" style="outline: rgb(153, 153, 153) dashed 1px;">SHRI GANESH</span>
+                                        <br contenteditable="false" style=""> <span contenteditable="true" data-key="home.table.shri-ganesh.time" style="outline: rgb(153, 153, 153) dashed 1px;">04:40 PM</span> <br contenteditable="false" style="">
+                                    </td>
+                                    <td contenteditable="true" style="">
+                                        13 </td>
+                                    <td contenteditable="true" style="user-select: text; pointer-events: auto; outline: rgb(153, 153, 153) dashed 1px;" tabindex="0"><strong class="waitimg" contenteditable="false"><img src="uploads/wait.gif" class="img-responsive" width="30" height="30" contenteditable="false"></strong></td>
+                                </tr>
+
+                                <tr>
+                                    <td class="forYellowGradient" contenteditable="false" style="">
+                                        <span class="gamenameeach" contenteditable="true" data-key="home.table.faridabad.name" style="outline: rgb(153, 153, 153) dashed 1px;">FARIDABAD</span>
+                                        <br contenteditable="false" style=""> <span contenteditable="true" data-key="home.table.faridabad.time" style="outline: rgb(153, 153, 153) dashed 1px;">06:10 PM</span> <br contenteditable="false" style="">
+                                    </td>
+                                    <td contenteditable="true" style="">
+                                        44 </td>
+                                    <td contenteditable="true" style="user-select: text; pointer-events: auto; outline: rgb(153, 153, 153) dashed 1px;" tabindex="0"><strong class="waitimg" contenteditable="false"><img src="uploads/wait.gif" class="img-responsive" width="30" height="30" contenteditable="false"></strong></td>
+                                </tr>
+
+
+                                <tr>
+                                    <td class="forYellowGradient" contenteditable="false" style="">
+                                        <span class="gamenameeach" contenteditable="true" data-key="home.table.shimla-super.name" style="outline: rgb(153, 153, 153) dashed 1px;">Shimla super</span>
+                                        <br contenteditable="false" style=""> <span contenteditable="true" data-key="home.table.shimla-super.time" style="outline: rgb(153, 153, 153) dashed 1px;">07:50 PM</span> <br contenteditable="false" style="">
+                                    </td>
+                                    <td contenteditable="true" style="">
+                                        34 </td>
+                                    <td contenteditable="true" style="user-select: text; pointer-events: auto; outline: rgb(153, 153, 153) dashed 1px;" tabindex="0"><strong class="waitimg" contenteditable="false"><img src="uploads/wait.gif" class="img-responsive" width="30" height="30" contenteditable="false"></strong></td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td class="forYellowGradient" contenteditable="false" style="">
+                                        <span class="gamenameeach" contenteditable="true" data-key="home.table.gaziyabad.name" style="outline: rgb(153, 153, 153) dashed 1px;">GAZIYABAD</span>
+                                        <br contenteditable="false" style=""> <span contenteditable="true" data-key="home.table.gaziyabad.time" style="outline: rgb(153, 153, 153) dashed 1px;">09:30 PM</span> <br contenteditable="false" style="">
+                                    </td>
+                                    <td contenteditable="true" style="">
+                                        11 </td>
+                                    <td contenteditable="true" style="user-select: text; pointer-events: auto; outline: rgb(153, 153, 153) dashed 1px;" tabindex="0"><strong class="waitimg" contenteditable="false"><img src="uploads/wait.gif" class="img-responsive" width="30" height="30" contenteditable="false"></strong></td>
+                                </tr>
+
+
+                                <tr>
+                                    <td class="forYellowGradient" contenteditable="false" style="">
+                                        <span class="gamenameeach" contenteditable="true" data-key="home.table.bilaspur.name" style="outline: rgb(153, 153, 153) dashed 1px;">Bilaspur</span>
+                                        <br contenteditable="false" style=""> <span contenteditable="true" data-key="home.table.bilaspur.time" style="outline: rgb(153, 153, 153) dashed 1px;">10:20 PM</span> <br contenteditable="false" style="">
+                                    </td>
+                                    <td contenteditable="true" style="">
+                                        68 </td>
+                                    <td contenteditable="true" style="user-select: text; pointer-events: auto; outline: rgb(153, 153, 153) dashed 1px;" tabindex="0">11</td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td class="forYellowGradient" contenteditable="false" style="">
+                                        <span class="gamenameeach" contenteditable="true" data-key="home.table.gali.name" style="outline: rgb(153, 153, 153) dashed 1px;">GALI</span>
+                                        <br contenteditable="false" style=""> <span contenteditable="true" data-key="home.table.gali.time" style="outline: rgb(153, 153, 153) dashed 1px;">11:40 PM</span> <br contenteditable="false" style="">
+                                    </td>
+                                    <td contenteditable="true" style="">99</td>
+                                    <td contenteditable="true" style="user-select: text; pointer-events: auto; outline: rgb(153, 153, 153) dashed 1px;" tabindex="0">78</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+    <script contenteditable="false" style="">
+      // Sync Home table 'आज का रिज़ल्ट' with server-side chart storage (fallback to localStorage)
+      (function(){
+        // Escape helper to prevent HTML injection in banner
+        function escapeHtml(str){
+          return String(str)
+            .replace(/&/g,'&amp;')
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;')
+            .replace(/'/g,'&#039;');
+        }
+
+        // Latest update storage helpers
+        const LATEST_KEY = 'latestUpdate';
+        function setLatestUpdate(game, value){
+          try { localStorage.setItem(LATEST_KEY, JSON.stringify({ game, value, ts: Date.now() })); } catch(e){}
+        }
+        function getLatestUpdate(){
+          try {
+            const raw = localStorage.getItem(LATEST_KEY);
+            if (!raw) return null;
+            const obj = JSON.parse(raw);
+            if (!obj || !obj.game || !obj.value) return null;
+            return obj;
+          } catch(e){ return null; }
+        }
+        function renderLatestUpdate(){
+          // Clear banner (we no longer show a separate line)
+          const banner = document.getElementById('latest-update');
+          if (banner) banner.innerHTML = '';
+          // Update the featured box instead (DISAWER area)
+          const data = getLatestUpdate();
+          if (!data) return;
+          const nameEl = document.querySelector('.sattaname p');
+          const valEl = document.querySelector('.sattaresult span');
+          if (nameEl) nameEl.textContent = data.game;
+          if (valEl) renderTopFeaturedRightOnly(valEl, data.value);
+          // Sync the separate rectangle box below Telegram too
+          try { renderIntoFeaturedRect(data.value); } catch(e){}
+        }
+        function renderFeaturedValueInto(containerSpan, raw){
+          const value = String(raw||'').trim();
+          // Extract up to two numeric tokens
+          const nums = value.match(/\d+/g) || [];
+          const a = nums[0] || '';
+          const b = nums[1] || '';
+          // Always render two boxes with an arrow in between for consistent layout
+          containerSpan.innerHTML = '<span class="num"></span> <img class="sep" src="uploads/arrow.gif" alt=">" width="34" height="34" style="vertical-align:middle"> <span class="num"></span>';
+          try {
+            const boxes = containerSpan.querySelectorAll('.num');
+            if (boxes[0]) boxes[0].textContent = a;
+            if (boxes[1]) boxes[1].textContent = b;
+          } catch(e) {}
+        }
+
+        // For the TOP featured area: show the most recently typed number (last numeric token)
+        function renderTopFeaturedRightOnly(containerSpan, raw){
+          const value = String(raw||'').trim();
+          const nums = value.match(/\d+/g) || [];
+          const current = (nums.length ? String(nums[nums.length - 1]) : '').trim();
+          containerSpan.innerHTML = '<span class="num"></span>';
+          try { const box = containerSpan.querySelector('.num'); if (box) box.textContent = current; } catch(e) {}
+        }
+        function renderIntoFeaturedRect(raw){
+          const wrapRect = document.querySelector('.featured-rect');
+          if (!wrapRect) return;
+          const value = String(raw||'').trim();
+          const nums = value.match(/\d+/g) || [];
+          const a = nums[0] || '';
+          const b = nums[1] || '';
+          // ensure two .num spans exist
+          let numEls = wrapRect.querySelectorAll('.result .num');
+          if (numEls.length < 2) {
+            const resultRow = wrapRect.querySelector('.result');
+            if (resultRow) {
+              resultRow.innerHTML = '<span class="num"></span>&nbsp;<img class="sep" src="uploads/arrow.gif" alt=">">&nbsp;<span class="num"></span>';
+              numEls = wrapRect.querySelectorAll('.result .num');
+            }
+          }
+          if (numEls[0]) numEls[0].textContent = a;
+          if (numEls[1]) numEls[1].textContent = b;
+        }
+        const urlParams = new URLSearchParams(location.search);
+        const isAdmin = urlParams.get('admin') === '1' || urlParams.get('admin') === 1 || urlParams.get('admin') === true;
+        const SAFE_MODE = urlParams.get('safe') === '1';
+        // --- Client-side game mapping: display name -> canonical slug ---
+        function slugifyGameLocal(name){
+          return String(name||'')
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+        }
+        function gameSlugFor(name){
+          const l = String(name||'').trim().toLowerCase();
+          const map = {
+            // Display -> slug remaps
+            'saharanpur city': 'alwar',
+            'gwalior': 'gwalior',
+            'delhi bazar': 'delhi-bazar',
+            'shri ganesh': 'shri-ganesh',
+            'faridabad': 'faridabad',
+            'shimla super': 'shimla-super',
+            'gaziyabad': 'gaziyabad',
+            'bilaspur': 'bilaspur'
+          };
+          return map[l] || slugifyGameLocal(l);
+        }
+        function storageKey(game, year){ return `yearchart:${gameSlugFor(game)}:${year}`; }
+        function loadDataLocal(game, year){ try { return JSON.parse(localStorage.getItem(storageKey(game,year))||'{}'); } catch { return {}; } }
+        function saveDataLocal(game, year, data){ try { localStorage.setItem(storageKey(game,year), JSON.stringify(data||{})); } catch (e){} }
+        async function fetchChart(game, year){
+          // API reads disabled: return only local data
+          return loadDataLocal(game, year);
+        }
+        async function saveChart(game, year, key, value){
+          // Mirror to local first for snappy UX
+          const cur = loadDataLocal(game, year);
+          if (value === '' || value == null) { delete cur[key]; } else { cur[key] = value; }
+          saveDataLocal(game, year, cur);
+          // Server writes disabled
+        }
+        function datePartsOffset(offsetDays){
+          const d = new Date();
+          d.setDate(d.getDate() + (offsetDays||0));
+          return { y: String(d.getFullYear()), m: String(d.getMonth()+1).padStart(2,'0'), dd: String(d.getDate()).padStart(2,'0') };
+        }
+        function todayParts(){ return datePartsOffset(0); }
+        function yesterdayParts(){ return datePartsOffset(-1); }
+
+        // Ensure DISAWER hero box reflects backend value even for first-time visitors
+        async function fetchAndRenderDisawer(){
+          const { y, m, dd } = todayParts();
+          const todayKey = `${dd}-${m}`;
+          try {
+            const obj = await fetchChart('Disawer', y);
+            if (obj && typeof obj === 'object') {
+              let val = '';
+              if (Object.prototype.hasOwnProperty.call(obj, todayKey)) {
+                val = obj[todayKey] || '';
+              }
+              // Fallback: pick the latest DD-MM key if today missing
+              if (!val) {
+                const keys = Object.keys(obj).filter(k => /^\d{2}-\d{2}$/.test(k));
+                if (keys.length) {
+                  keys.sort((a,b) => {
+                    const [da, ma] = a.split('-').map(n=>parseInt(n,10));
+                    const [db, mb] = b.split('-').map(n=>parseInt(n,10));
+                    const ta = new Date(parseInt(y,10), ma-1, da).getTime();
+                    const tb = new Date(parseInt(y,10), mb-1, db).getTime();
+                    return ta - tb;
+                  });
+                  const lastKey = keys[keys.length-1];
+                  val = obj[lastKey] || '';
+                }
+              }
+              if (val) {
+                // Only update the DISAWER rectangle box; do NOT override the global latest update/top banner
+                try { renderIntoFeaturedRect(val); } catch(e){}
+              }
+            }
+          } catch(e){}
+        }
+
+        function prefillFromStorage(){
+          const table = document.querySelector('.tablebox1 table');
+          if (!table) return;
+          const tbody = table.querySelector('tbody');
+          if (!tbody) return;
+          const { y: yToday, m: mToday, dd: ddToday } = todayParts();
+          const keyToday = `${ddToday}-${mToday}`;
+          const { y: yYest, m: mYest, dd: ddYest } = yesterdayParts();
+          const keyYest = `${ddYest}-${mYest}`;
+          const rows = Array.from(tbody.querySelectorAll('tr'));
+          const cache = new Map(); // key: `${game}|${year}` -> data
+          const BATCH = 6;
+          let i = 0;
+          const step = async () => {
+            let count = 0;
+            while (i < rows.length && count < BATCH) {
+              const tr = rows[i++];
+              const a = tr.querySelector('.gamenameeach');
+              if (!a) { count++; continue; }
+              const game = (a.textContent || '').trim();
+              const tds = tr.querySelectorAll('td');
+              if (tds.length >= 3) {
+                const prevTd = tds[1];
+                const resultTd = tds[2];
+                // today
+                const ckeyT = `${game}|${yToday}`;
+                let objT = cache.get(ckeyT);
+                if (!objT) { objT = await fetchChart(game, yToday); cache.set(ckeyT, objT); }
+                if (objT && Object.prototype.hasOwnProperty.call(objT, keyToday)) {
+                  const hasChild = resultTd.childElementCount > 0;
+                  const txtNow = (resultTd.textContent || '').trim();
+                  if (!hasChild && (txtNow === '' || txtNow === '-')) {
+                    resultTd.textContent = objT[keyToday];
+                  }
+                }
+                // yesterday (may be previous year)
+                const ckeyY = `${game}|${yYest}`;
+                let objY = cache.get(ckeyY);
+                if (!objY) { objY = await fetchChart(game, yYest); cache.set(ckeyY, objY); }
+                if (objY && prevTd && Object.prototype.hasOwnProperty.call(objY, keyYest)) {
+                  const hasChildPrev = prevTd.childElementCount > 0;
+                  const txtPrev = (prevTd.textContent || '').trim();
+                  if (!hasChildPrev && (txtPrev === '' || txtPrev === '-')) {
+                    prevTd.textContent = objY[keyYest];
+                  }
+                }
+              }
+              count++;
+            }
+            if (i < rows.length) setTimeout(step, 0);
+          };
+          setTimeout(step, 0);
+        }
+
+        function stripDashPlaceholders(){
+          const table = document.querySelector('.tablebox1 table');
+          if (!table) return;
+          const tbody = table.querySelector('tbody');
+          if (!tbody) return;
+          tbody.querySelectorAll('tr').forEach(tr => {
+            const tds = tr.querySelectorAll('td');
+            if (tds.length < 3) return;
+            const prevTd = tds[1];
+            const resultTd = tds[2];
+            [prevTd, resultTd].forEach(td => {
+              if (td && td.childElementCount === 0 && (td.textContent||'').trim() === '-') {
+                td.textContent = '';
+              }
+            });
+          });
+        }
+
+        function cleanPlaceholders(){
+          if (!isAdmin) return;
+          const table = document.querySelector('.tablebox1 table');
+          if (!table) return;
+          const tbody = table.querySelector('tbody');
+          if (!tbody) return;
+          tbody.querySelectorAll('tr').forEach(tr => {
+            const tds = tr.querySelectorAll('td');
+            if (tds.length < 3) return;
+            const prevTd = tds[1];
+            const resultTd = tds[2];
+            [prevTd, resultTd].forEach(td => {
+              if (td && td.querySelector && td.querySelector('img')) {
+                td.textContent = '-';
+              }
+            });
+          });
+        }
+
+        function bindPersist(){
+          if (!isAdmin) return; // only admins can persist changes
+          const table = document.querySelector('.tablebox1 table');
+          if (!table) return;
+          const tbody = table.querySelector('tbody');
+          if (!tbody) return;
+          async function handle(tr, editedTd){
+            const a = tr.querySelector('.gamenameeach');
+            if (!a) return;
+            const game = (a.textContent || '').trim();
+            const tds = tr.querySelectorAll('td');
+            if (tds.length < 3) return;
+            const prevTd = tds[1];
+            const resultTd = tds[2];
+            const isPrev = editedTd === prevTd;
+            const { y: yT, m: mT, dd: ddT } = todayParts();
+            const keyToday = `${ddT}-${mT}`;
+            const { y: yY, m: mY, dd: ddY } = yesterdayParts();
+            const keyYest = `${ddY}-${mY}`;
+            const targetTd = isPrev ? prevTd : resultTd;
+            const val = (targetTd.textContent || '').trim();
+            // If admin typed '*w', show waiting gif and clear saved value for that day
+            if (isAdmin && val.toLowerCase() === '*w') {
+              targetTd.innerHTML = '<strong class="waitimg"><img src="uploads/wait.gif" class="img-responsive" width="30" height="30"></strong>';
+              const yr = isPrev ? yY : yT;
+              const key = isPrev ? keyYest : keyToday;
+              const obj = loadDataLocal(game, yr);
+              if (obj && Object.prototype.hasOwnProperty.call(obj, key)) { delete obj[key]; }
+              saveDataLocal(game, yr, obj);
+              await saveChart(game, yr, key, '');
+              return;
+            }
+            if (!game) return;
+            const yr = isPrev ? yY : yT;
+            const key = isPrev ? keyYest : keyToday;
+            await saveChart(game, yr, key, val);
+            // Announce latest update only for today's edits
+            if (!isPrev && val && val !== '-') {
+              setLatestUpdate(game, val);
+              renderLatestUpdate();
+            }
+          }
+          // Delegate input/blur events on the tbody
+          tbody.addEventListener('input', (e) => {
+            const td = e.target.closest('td');
+            const tr = td && td.closest('tr');
+            if (!tr) return;
+            handle(tr, td);
+          });
+          tbody.addEventListener('blur', (e) => {
+            const td = e.target.closest('td');
+            const tr = td && td.closest('tr');
+            if (!tr) return;
+            handle(tr, td);
+          }, true);
+        }
+
+        function enableAdminEditing(){
+          if (!isAdmin) return; // only admins can edit
+          const table = document.querySelector('.tablebox1 table');
+          if (!table) return;
+          const tbody = table.querySelector('tbody');
+          if (!tbody) return;
+          // Remove blocking contenteditable="false" on ancestors for editable cells
+          function unblockAncestors(node){
+            let cur = node.parentElement;
+            while (cur && cur !== document.body){
+              if (cur.hasAttribute('contenteditable') && cur.getAttribute('contenteditable') === 'false') {
+                cur.removeAttribute('contenteditable');
+              }
+              cur = cur.parentElement;
+            }
+          }
+          tbody.querySelectorAll('tr').forEach(tr => {
+            const tds = tr.querySelectorAll('td');
+            if (tds.length < 3) return;
+            const prevTd = tds[1];
+            const resultTd = tds[2];
+            [prevTd, resultTd].forEach(td => {
+              if (!td) return;
+              // Ensure no ancestor blocks editing for this cell
+              unblockAncestors(td);
+              td.setAttribute('contenteditable','true');
+              td.setAttribute('tabindex','0');
+              td.style.outline = '1px dashed #999';
+              td.style.userSelect = 'text';
+              td.style.pointerEvents = 'auto';
+              // If the cell currently contains an image (wait.gif), allow typing to replace it
+              td.addEventListener('keydown', (evt) => {
+                const printable = evt.key.length === 1 || ['Backspace','Delete','Enter','Space'].includes(evt.key);
+                if (printable && td.querySelector('img')) {
+                  // Clear gif so user can type
+                  td.textContent = '';
+                }
+              });
+              td.addEventListener('focusin', () => {
+                if (td.querySelector('img')) {
+                  // Clear on focus so caret can be placed for typing
+                  td.textContent = '';
+                }
+              });
+            });
+          });
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', function(){
+          // Pause marquee in safe mode to reduce continuous layout
+          if (SAFE_MODE) {
+            try { document.querySelectorAll('marquee').forEach(m => m.stop && m.stop()); } catch(e){}
+          }
+          prefillFromStorage();
+          stripDashPlaceholders();
+          applyWaitShortcodeToResults();
+          // Always load today's DISAWER from server and render the hero box
+          fetchAndRenderDisawer();
+          // Lightweight polling to catch backend updates within a minute
+          setInterval(fetchAndRenderDisawer, 60000);
+          if (isAdmin) {
+            bindPersist();
+            enableAdminEditing();
+            bindFeaturedRectEditing();
+          } else {
+            lockVisitorView();
+          }
+          // Render latest update from saved state on load
+          renderLatestUpdate();
+        });
+
+        // Allow admin to edit the top featured numeric boxes directly; saves to Disawer today's chart key
+        function bindFeaturedAdminEditing(){
+          try {
+            const wrap = document.querySelector('.sattaresult span');
+            const title = document.querySelector('.sattaname p');
+            if (!wrap) return;
+            // If current content is plain text, normalize into structure
+            renderFeaturedValueInto(wrap, (wrap.textContent||'').trim());
+            // Ensure two boxes exist even if only one number was present
+            const nums = wrap.querySelectorAll('.num');
+            if (nums.length === 0) {
+              wrap.innerHTML = '<span class="num"></span> <img class="sep" src="uploads/arrow.gif" alt=">" width="34" height="34" style="vertical-align:middle"> <span class="num"></span>';
+            } else if (nums.length === 1) {
+              wrap.insertAdjacentHTML('beforeend', ' <img class="sep" src="uploads/arrow.gif" alt=">" width="34" height="34" style="vertical-align:middle"> <span class="num"></span>');
+            } else if (!wrap.querySelector('img.sep')) {
+              nums[0].insertAdjacentHTML('afterend', ' <img class="sep" src="uploads/arrow.gif" alt=">" width="34" height="34" style="vertical-align:middle"> ');
+            }
+            // Make numbers editable
+            wrap.querySelectorAll('.num').forEach(el => {
+              el.setAttribute('contenteditable','true');
+              el.setAttribute('tabindex','0');
+              el.style.outline = '1px dashed #999';
+              el.addEventListener('keydown', (evt) => {
+                // allow only digits and basic editing
+                const allowed = /[0-9]/.test(evt.key) || ['Backspace','Delete','ArrowLeft','ArrowRight','Tab'].includes(evt.key);
+                if (!allowed) evt.preventDefault();
+              });
+              // Ensure clicking a box focuses it and places caret at end
+              el.addEventListener('mousedown', (evt) => {
+                try { evt.stopPropagation(); evt.stopImmediatePropagation(); } catch {}
+                evt.preventDefault();
+                el.focus();
+                try {
+                  const sel = window.getSelection();
+                  const range = document.createRange();
+                  range.selectNodeContents(el);
+                  range.collapse(false);
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+                } catch {}
+              });
+              const onCommit = async () => {
+                const a = (wrap.querySelectorAll('.num')[0]?.textContent||'').trim();
+                const b = (wrap.querySelectorAll('.num')[1]?.textContent||'').trim();
+                const val = [a,b].filter(Boolean).join(' ');
+                // Save under canonical game name
+                const game = 'Disawer';
+                const { y, m, dd } = todayParts();
+                const key = `${dd}-${m}`;
+                await saveChart(game, y, key, val);
+                if (val) { setLatestUpdate(game, val); renderLatestUpdate(); }
+                try { if (title) title.textContent = 'DISAWER'; } catch {}
+              };
+              el.addEventListener('input', onCommit);
+              el.addEventListener('blur', onCommit);
+            });
+            // Make clicking the result row focus the appropriate editable box (left/right)
+            const resultRow = wrap;
+            resultRow.addEventListener('mousedown', (evt) => {
+              const nums = resultRow.querySelectorAll('.num');
+              if (!nums.length) return;
+              const first = nums[0];
+              const second = nums[1] || null;
+              const target = evt.target;
+              // If user clicked directly on a .num, focus that
+              if (target && target.classList && target.classList.contains('num')) {
+                target.focus();
+                return;
+              }
+              // If user clicked on the arrow image or the right half, focus the second box
+              const rectBox = resultRow.getBoundingClientRect();
+              const clickX = evt.clientX;
+              const clickedRightHalf = (clickX - rectBox.left) > rectBox.width / 2;
+              if (second && ((target && target.classList && target.classList.contains('sep')) || clickedRightHalf)) {
+                second.focus();
+                return;
+              }
+              // Default: focus first
+              first.focus();
+            });
+          } catch(e) { /* no-op */ }
+        }
+        // Allow admin to edit the DISAWER rectangle box directly; saves to Disawer today's chart key
+        function bindFeaturedRectEditing(){
+          try {
+            if (!isAdmin) return; // only admins can edit
+            const rect = document.querySelector('.featured-rect.disawer-hero');
+            if (!rect) return;
+            const resultRow = rect.querySelector('.result');
+            if (!resultRow) return;
+            // Unblock any ancestor that might carry contenteditable="false"
+            function unblockAncestors(node){
+              let cur = node && node.parentElement;
+              while (cur && cur !== document.body){
+                if (cur.hasAttribute('contenteditable') && cur.getAttribute('contenteditable') === 'false') {
+                  cur.removeAttribute('contenteditable');
+                }
+                cur = cur.parentElement;
+              }
+            }
+            unblockAncestors(resultRow);
+            // Ensure there are exactly two .num spans with a separator image in between
+            const currentNums = resultRow.querySelectorAll('.num');
+            if (currentNums.length === 0) {
+              resultRow.innerHTML = '<span class="num"></span>&nbsp;<img class="sep" src="uploads/arrow.gif" alt=">">&nbsp;<span class="num"></span>';
+            } else if (currentNums.length === 1) {
+              // insert arrow and second box
+              currentNums[0].insertAdjacentHTML('afterend', '&nbsp;<img class="sep" src="uploads/arrow.gif" alt=">">&nbsp;<span class="num"></span>');
+            } else if (!resultRow.querySelector('img.sep')) {
+              // two nums but missing arrow
+              currentNums[0].insertAdjacentHTML('afterend', ' <img class="sep" src="uploads/arrow.gif" alt=">"> ');
+            }
+            const nums = resultRow.querySelectorAll('.num');
+            nums.forEach(el => {
+              el.setAttribute('contenteditable','true');
+              el.setAttribute('tabindex','0');
+              el.style.outline = '1px dashed #999';
+              el.style.pointerEvents = 'auto';
+              el.style.userSelect = 'text';
+              // Strongly focus the clicked box and stop bubbling so row handler won't override
+              el.addEventListener('mousedown', (evt) => {
+                try { evt.stopPropagation(); evt.stopImmediatePropagation(); } catch {}
+                // prevent selection on image drag etc.
+                evt.preventDefault();
+                el.focus();
+                // place caret at end
+                try {
+                  const sel = window.getSelection();
+                  const range = document.createRange();
+                  range.selectNodeContents(el);
+                  range.collapse(false);
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+                } catch {}
+              });
+              el.addEventListener('keydown', (evt) => {
+                const allowed = /[0-9]/.test(evt.key) || ['Backspace','Delete','ArrowLeft','ArrowRight','Tab'].includes(evt.key);
+                if (!allowed) evt.preventDefault();
+              });
+              const onCommit = async () => {
+                const a = (resultRow.querySelectorAll('.num')[0]?.textContent||'').trim();
+                const b = (resultRow.querySelectorAll('.num')[1]?.textContent||'').trim();
+                const val = [a,b].filter(Boolean).join(' ');
+                const game = 'Disawer';
+                const { y, m, dd } = todayParts();
+                const key = `${dd}-${m}`;
+                await saveChart(game, y, key, val);
+                if (val) { setLatestUpdate('DISAWER', val); renderLatestUpdate(); }
+              };
+              el.addEventListener('input', onCommit);
+              el.addEventListener('blur', onCommit);
+            });
+            // Row-level mousedown to choose left/right when clicking arrow or halves
+            resultRow.addEventListener('mousedown', (evt) => {
+              const numsNow = resultRow.querySelectorAll('.num');
+              if (!numsNow.length) return;
+              const first = numsNow[0];
+              const second = numsNow[1] || null;
+              const target = evt.target;
+              // Click on arrow image or right half -> focus right
+              const rectBox = resultRow.getBoundingClientRect();
+              const clickX = evt.clientX;
+              const clickedRightHalf = (clickX - rectBox.left) > rectBox.width / 2;
+              if (second && ((target && target.classList && target.classList.contains('sep')) || clickedRightHalf)) {
+                evt.preventDefault();
+                second.focus();
+                return;
+              }
+              // Otherwise focus left
+              evt.preventDefault();
+              first.focus();
+            });
+          } catch(e) { /* no-op */ }
+        }
+      })();
+    </script>
+    <section class="callbox" contenteditable="false" style="">
+        <div class="text-center" contenteditable="false" style="">
+            <div style="position: relative; min-height: 1px; padding-right: 0px; padding-left: 0px;" contenteditable="false">
+                <div class="card" style="box-sizing: border-box; position: relative; display: flex; flex-direction: column; min-width: 0px; overflow-wrap: break-word; background-clip: border-box; border: 0px; border-radius: 0.25rem;" contenteditable="false">
+                    <div class="card-body" style="box-sizing: border-box; flex: 1 1 auto; min-height: 1px; padding: 1.25rem; border: dashed red; background: linear-gradient(rgb(255, 216, 0), rgb(255, 255, 255)); border-radius: 20px; line-height: 15px;" contenteditable="false">
+                        <p contenteditable="false" style=""><strong contenteditable="true" data-key="home.banner.greeting" style="outline: rgb(153, 153, 153) dashed 1px;">नमस्कार साथियो</strong><strong contenteditable="false" style=""> </strong></p>
+
+                        <p contenteditable="false" style=""><strong contenteditable="true" data-key="home.banner.message" style="outline: rgb(153, 153, 153) dashed 1px;">अपनी गेम का रिजल्ट हमारी web साइट पर लगवाने के लिए संपर्क करें।&nbsp; &nbsp;</strong></p>
+                        <p contenteditable="false" style=""><big contenteditable="false" style=""><strong contenteditable="true" data-key="home.banner.contactName" style="outline: rgb(153, 153, 153) dashed 1px;">ARUN BHAI&nbsp;</strong></big></p>
+                        <p contenteditable="false" style="">
+                            <a href="https://Wa.me/" target="_blank" contenteditable="false" style=""><img src="https://lucky-satta.com/whatsAppChat.png" style="height: 80px; margin: auto; width: 230px;" contenteditable="false"></a>
+                        </p>
+                        <p contenteditable="false" style=""><strong contenteditable="true" data-key="home.banner.note" style="outline: rgb(153, 153, 153) dashed 1px;">NOTE: इस नंबर पर लीक गेम नही मिलता गेम लेने वाले भाई कॉल या मैसेज न करें।</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+    <section class="" contenteditable="false" style="">
+        <div class="container" contenteditable="false" style="">
+            <div class="row" contenteditable="false" style="">
+                <div class="col-md-12 text-center" contenteditable="false" style="">
+                    <h1 style="color: rgb(255, 102, 51);" contenteditable="true">Lucky Satta - Best Satta Bazar Website in the world</h1>
+                    <h2 style="color: rgb(255, 102, 51);" contenteditable="true">What is Lucky Satta?</h2>
+                    <p align="justify" contenteditable="false" style=""><strong style="color: rgb(0, 0, 0);" contenteditable="false">
+                        Who is the Lucky Satta? The name itself says it all. Lucky Satta, or Satta Matka as it is commonly referred to, is an Indian national lottery game that saw its origin in the pre Independence days. 
+                        The game was first introduced in the Indian part right before Independence. Disasters like Partition and hunger led to the introduction of a new form of gaming. Although, the popularity of the satta Gali only increased, slowly but steadily. It is a fact that the game has become extremely popular among all age groups. This is evident by the exponential increase in the number of casinos and betting firms sprouting everywhere.
+                        So, who is Lucky Satta? The answer to the question revolves around two major factors. One is how the players play out the game. As already mentioned above, the game is played on a lot of fronts. A player participating in the game must be alert all the time.
+                        In the Lucky Satta Bazar, every player gets to see his/her own name on the "Lucky Satta." The "Lucky Satta" is considered the most crucial factor in deciding the game's result. This happens when the player sees their name on the chart. The person with the highest score, after all, other participants, will get the highest prize. In some cases, the person who gets the highest price does not necessarily win the game.
+                        However, many players would try to play Lucky Satta according to the rules as specified by the gambling company. Gambling companies do allow players to play satta matka as per the set norms. However, one can also find many sites that allow players to play <a href="https://lucky-satta.com" contenteditable="true" style="">Lucky Satta</a> as they like. There is nothing wrong if you decide to play Lucky Satta. If you choose to play satta matka according to the company's rules, then you will get a winning edge.
+                        Now, let us move ahead to the second aspect of this king game - the Lucky Satta. The Lucky Satta is considered the most important decision that every player has to make at the start of the game. These decisions have to be taken at the right time to get the best result. It would be best to be very careful about this part because making a mistake in this area can cost you the game. The important thing to note here is that the Lucky Satta should be chosen with care and not according to your personal feelings.
+                        So, how should you play Lucky Satta matka? This satta matka decision should be made after analyzing the changes and results of the specific game you are playing. Now, once you are through with the analysis, you can start choosing the cards for the particular game you are playing. If you think you are playing a high-class game, you should not just select any card. You need to look for those cards which can help you get a good result in Lucky Satta.
+                        On the other hand, if you are planning to play the king game for the first time, you may not have an idea about the different aspects of the game. In that case, you should take some professional help. Look for an experienced player who can guide you about the rules and the different aspects of this king game. You can also look for some websites to find many different kinds of images related to Lucky Satta. All this will help you understand who Lucky Satta is and help you make the best decision about Lucky Satta.</strong></p>
+                    <h2 style="color: rgb(255, 102, 51);" contenteditable="true">Lucky Satta, Lucky Satta Bazar, Satta Result</h2>
+                    <p align="justify" contenteditable="false" style=""><strong style="color: rgb(0, 0, 0);" contenteditable="true">
+                        Lucky Satta is very famous that will make you more rich with online gaming. If you seek such a web that will provide you with the best source of the Lucky Satta result like Gali Desawar Faridabad Ghaziabad, then you are in the right place. Here you will be able to check the result of the black Lucky Satta every easily. The link has been given in your desired keyword. You can also check the linear wise system of the black Satta result chart.</strong></p>
+                    <h2 style="color: rgb(255, 102, 51);" contenteditable="true">How are you can earn from Lucky Satta?</h2>
+                    <p align="justify" contenteditable="false" style=""><strong style="color: rgb(0, 0, 0);" contenteditable="true">
+                        Lucky Satta is performing all over India, they all comprehend this is a wrong obsession that taxpayers throw away their funds from state amount. Even the entire data range is just 1 to 100 out, which merely a single range randomly return out. Whichever quantity is available when an individual place Rs. 5- on this number, subsequently, he'll receive Rs.4 5 0, when he set Rs. 10/on this number subsequently he'll acquire Rs.900, should he set Rs. 1-5 /on this number afterward, he'll get Rs.1350, should he place Rs. 20/on this number subsequently he'll get Rs.1 800 on an identical variety, If he's retained Rs.a thousand Rupees on this amount, he'll get a reward of Rs.90,000.</strong></p>
+                    <h2 style="color: rgb(255, 102, 51);" contenteditable="true">How to get your Lucky Satta Result?</h2>
+                    <p align="justify" contenteditable="false" style=""><strong style="color: rgb(0, 0, 0);" contenteditable="false">
+                        To get your Satta result, you can visit a company's website or use your mobile device. Checking is free and can be done from anywhere. Once you have verified your account details, you can view your <a href="https://lucky-satta.com" contenteditable="true" style="">Satta result</a>. If you have won, you will be paid a lump sum. However, if you lose, you will have to pay the company a fine. While Lucky Satta was once a popular gambling game, technology has changed the game. Instead of people choosing a random number from a matka. When someone gets the winning number, they can win up to eighty or ninety times their initial bet. In addition to the official website, and you can also check the results on several other websites. Some of these websites offer live updates on Lucky Satta games. Other websites will offer past results and a searchable database. You can also check the <a href="https://lucky-satta.com" contenteditable="true" style="">Satta result</a> at a Lucky Satta store in your area. The best way to get the latest results is to visit a dedicated website with the latest results, and a searchable database. Satta can be played online or offline. If you play offline, you can use a satta agent to write your bets. The Satta result will be displayed on a computer screen within two hours after the end of the game. However, please note that you cannot play Satta after the last day of the month.</strong></p>
+                    <h2 style="color: rgb(255, 102, 51);" contenteditable="true">How to play Lucky Satta?</h2>
+                    <p align="justify" contenteditable="false" style=""><strong style="color: rgb(0, 0, 0);" contenteditable="true">
+                        Lucky Satta is a game of luck. There are several winners and losers. It is recommended to play only with small amounts of money. This is because you will lose that amount if you lose the game. Investing more money can make you lose even more. However, there are some tips you can follow to avoid losing all your money. In addition, you also have to stick to the rules to play the game. This way, you can enjoy your time playing Lucky Satta. You can play the Lucky Satta game online or offline. Online sites allow you to play whenever you want. Some players are experts in the game and can give you advice if you are a newbie. To play Lucky Satta online, you must enter your bank account details and choose your number. The game is very popular in India. It is legal in some states, but you should check if your state allows gambling. Lucky Satta is very close to gambling, so make sure you know the rules. Most states in India do not allow gambling or lotteries. However, online sites that offer this game attract many people. There are several ways to predict the winning numbers. Many people rely on old Lucky Satta records to make their predictions. Some people try to guess the numbers by looking at the graph of the previous games. You can also hire a bookmaker to make predictions. However, this will cost you money.</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="somelinks2" contenteditable="false" style="">
+        <div class="container" contenteditable="false" style="">
+            <div class="row" contenteditable="false" style="">
+                <div class="col-md-12 text-center" contenteditable="false" style="">
+                    <strong contenteditable="true" data-key="home.footer.copyright" style="outline: rgb(153, 153, 153) dashed 1px;">@ 2025 Lucky Satta :: ALL RIGHTS RESERVED</strong>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!--script-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" contenteditable="false" style=""></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous" contenteditable="false" style=""></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js" contenteditable="false" style=""></script>
+    <script contenteditable="false" style="">
+        $(function() {
+            $('.lazy').Lazy();
+        });
+    </script>
+    <script src="bootstrap-theme.js" contenteditable="false" style=""></script>
+    <script src="site-config.js" contenteditable="false" style=""></script>
+
+    <script contenteditable="false">
+      (function(){
+        const API_BASE = (window.API_BASE || '');
+        const SELECTOR = '[data-key]';
+
+        function debounce(fn, ms){
+          let t; return function(){ clearTimeout(t); const args = arguments; t = setTimeout(()=>fn.apply(this, args), ms); };
+        }
+
+        async function fetchContent(){
+          try {
+            const r = await fetch(API_BASE + '/api/content', { credentials: 'include' });
+            if (!r.ok) throw new Error('fetch content failed: ' + r.status);
+            const j = await r.json();
+            return j && j.data ? j.data : {};
+          } catch(e){
+            console.warn('content load error', e);
+            return {};
+          }
+        }
+
+        async function saveUpdates(updates){
+          try {
+            if (!Array.isArray(updates) || updates.length === 0) return;
+            const r = await fetch(API_BASE + '/api/content', {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              credentials: 'include',
+              body: JSON.stringify({ updates })
+            });
+            if (!r.ok) throw new Error('save failed: ' + r.status);
+            return true;
+          } catch(e){
+            console.error('content save error', e);
+            return false;
+          }
+        }
+
+        async function init(){
+          const usp = new URLSearchParams(location.search);
+          const isAdmin = usp.get('admin') === '1';
+          // Hydrate values
+          const data = await fetchContent();
+          document.querySelectorAll(SELECTOR).forEach(el => {
+            const k = el.getAttribute('data-key');
+            if (k && k in data) el.textContent = data[k];
+          });
+
+          if (!isAdmin) return; // view-only hydration above
+
+          // Verify auth before enabling auto-save in admin mode
+          let authed = false;
+          try {
+            const r = await fetch(API_BASE + '/api/auth-check', { credentials: 'include' });
+            if (r.ok) {
+              const j = await r.json();
+              authed = !!(j && j.ok);
+            }
+          } catch(_) { authed = false; }
+          if (!authed) return;
+
+          const send = debounce(async () => {
+            const updates = [];
+            document.querySelectorAll(SELECTOR).forEach(el => {
+              const k = el.getAttribute('data-key');
+              if (!k) return;
+              updates.push({ k, v: (el.textContent || '').trim() });
+            });
+            await saveUpdates(updates);
+          }, 400);
+
+          document.querySelectorAll(SELECTOR).forEach(el => {
+            // Make sure they stay editable in admin
+            el.setAttribute('contenteditable', 'true');
+            el.style.outline = '1px dashed #999';
+            el.addEventListener('input', send);
+            el.addEventListener('blur', send);
+          });
+        }
+
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+      })();
+    </script>
+<div id="windsurf-browser-preview-root" contenteditable="false" style="position: fixed; bottom: 0px; right: 0px; z-index: 2147483646;"></div></body></html>

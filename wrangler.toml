@@ -1,0 +1,13 @@
+﻿name = "sanjay-pages-dev"
+compatibility_date = "2024-10-01"
+pages_build_output_dir = "."
+
+[vars]
+# Local dev only; set real values in Cloudflare Pages dashboard for production
+ADMIN_USER = "sagar"
+ADMIN_PASS = "sagar12390"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "sanjay-db"
+database_id = "26c47617-86fb-4fb3-b3ef-7e5a27a1826e"

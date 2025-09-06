@@ -1,0 +1,13 @@
+{
+  "name": "sanjay-static-site",
+  "version": "1.0.0",
+  "description": "Static Satta website with optional simple server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "serve": "node server.js"
+  },
+  "keywords": ["static", "website", "satta", "local"],
+  "author": "",
+  "license": "MIT"
+}
